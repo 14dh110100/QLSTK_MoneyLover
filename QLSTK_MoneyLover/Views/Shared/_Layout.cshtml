@@ -1,0 +1,149 @@
+﻿@{ 
+    if (Session["userid"] == null && ViewBag.Page != "Login/Register") {
+        Response.Redirect("~/Home/Login");
+    }
+    if (Session["userid"] != null && ViewBag.Page == "Login/Register") {
+        Response.Redirect("~/Home/Index");
+    }
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="~/Templates/listashop/img/favicon2.png" type="image/png">
+    <title>Money Lover</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Templates/listashop/css/bootstrap.css">
+    <link rel="stylesheet" href="~/Templates/listashop/vendors/linericon/style.css">
+    <link rel="stylesheet" href="~/Templates/listashop/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Templates/listashop/vendors/owl-carousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Templates/listashop/vendors/lightbox/simpleLightbox.css">
+    <link rel="stylesheet" href="~/Templates/listashop/vendors/nice-select/~/Templates/listashop/css/nice-select.css">
+    <link rel="stylesheet" href="~/Templates/listashop/vendors/animate-~/Templates/listashop/css/animate.css">
+    <link rel="stylesheet" href="~/Templates/listashop/vendors/jquery-ui/jquery-ui.css">
+    <!-- main css -->
+    <link rel="stylesheet" href="~/Templates/listashop/css/style.css">
+    <link rel="stylesheet" href="~/Templates/listashop/css/responsive.css">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="~/Templates/listashop/js/jquery-3.2.1.min.js"></script>
+    <script src="~/Templates/listashop/js/popper.js"></script>
+    <script src="~/Templates/listashop/js/bootstrap.min.js"></script>
+    <script src="~/Templates/listashop/js/stellar.js"></script>
+    <script src="~/Templates/listashop/vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="~/Templates/listashop/vendors/nice-select/~/Templates/listashop/js/jquery.nice-select.min.js"></script>
+    <script src="~/Templates/listashop/vendors/isotope/imagesloaded.pkgd.min.js"></script>
+    <script src="~/Templates/listashop/vendors/isotope/isotope-min.js"></script>
+    <script src="~/Templates/listashop/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/Templates/listashop/js/jquery.ajaxchimp.min.js"></script>
+    <script src="~/Templates/listashop/js/mail-script.js"></script>
+    <script src="~/Templates/listashop/vendors/jquery-ui/jquery-ui.js"></script>
+    <script src="~/Templates/listashop/vendors/counter-up/jquery.waypoints.min.js"></script>
+    <script src="~/Templates/listashop/vendors/counter-up/jquery.counterup.js"></script>
+    <script src="~/Templates/listashop/js/theme.js"></script>
+    <script src="~/Models/Security/md5.min.js"></script>
+</head>
+<body>
+    <!--================Header Menu Area =================-->
+    @Html.Action("Header", "Layout")
+    <!--================Header Menu Area =================-->
+    <!--================Home Banner Area =================-->
+    @Html.Action("Banner", "Layout", new { banner = ViewBag.Title })
+    <!--================End Home Banner Area =================-->
+    <!--================Content =================-->
+    <div class="container">
+        @RenderBody()
+    </div>
+    <!--================End Content =================-->
+    <!--================ start footer Area  =================-->
+    @Html.Action("Footer", "Layout")
+    <!--================ End footer Area  =================-->
+    <!-- Modal -->
+    @Html.Action("Modal", "Layout")
+
+    <!-- Custom javascript -->
+    <script>
+        String.prototype.capitalize = function () {
+            return this.replace(/(?:^|\s)\S/g, function (a) { return a.toUpperCase(); });
+        };
+        $(".usernameinput").on('input', '', function () {
+            var str = $(this).val();
+            str = str.replace(/[^A-Za-z0-9_.\u0040]/, '');
+            this.value = str;
+        });
+        $(".pwinput").on('input', '', function () {
+            this.value = this.value.replace(/ +/g, '');
+        });
+        $(".nameinput").on('input', '', function () {
+            var str = $(this).val();
+            var regex = /[^a-zA-Z ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]/u;
+            str = str.replace(regex, '');
+            str = str.capitalize();
+            this.value = str.replace(/  +/g, ' ');
+        });
+        $(".toggle-password").click(function () {
+            $(this).toggleClass("fa-eye fa-eye-slash");
+            var input = $($(this).attr("toggle"));
+            if (input.attr("type") == "password") {
+                input.attr("type", "text");
+            } else {
+                input.attr("type", "password");
+            }
+        });
+
+        $("#create").click(function () {
+            $("#body-content-lg").empty();
+            $("#titleModal-lg").empty();
+            var txt = "Thêm sổ tiết kiệm";
+            $("#titleModal-lg").append(txt);
+                $("#body-content-lg").load("@Url.Action("Create")");
+
+        })
+        $("[action='edit']").click(function () {
+            $("#body-content-lg").empty();
+            $("#titleModal-lg").empty();
+            var txt = "Sửa sổ tiết kiệm";
+            $("#titleModal-lg").append(txt);
+                $("#body-content-lg").load("@Url.Action("Edit")/" + $(this).data("id"));
+
+        })
+
+        $("[action='deposit']").click(function () {
+            $("#body-content").empty();
+            $("#titleModal").empty();
+            var txt = "Gửi thêm";
+            $("#titleModal").append(txt);
+            $("#body-content").load("@Url.Action("Deposit")/" + $(this).data("id"));
+
+        })
+        $("[action='confirmwithdraw']").click(function () {
+            $("#body-content").empty();
+            $("#titleModal").empty();
+            var txt = "Xác nhận rút một phần";
+            $("#titleModal").append(txt);
+            $("#body-content").load("@Url.Action("ConfirmWithdraw")/" + $(this).data("id"));
+
+        })
+        $("[action='close']").click(function () {
+            $("#body-content").empty();
+            $("#titleModal").empty();
+            var txt = "Tất toán";
+            $("#titleModal").append(txt);
+            $("#body-content").load("@Url.Action("Close")/" + $(this).data("id"));
+
+        })
+        $("[action='delete']").click(function () {
+            $("#body-content").empty();
+            $("#titleModal").empty();
+            var txt = "Xác nhận xóa?";
+            $("#titleModal").append(txt);
+                $("#body-content").load("@Url.Action("Delete")/" + $(this).data("id"));
+        })
+    </script>
+
+</body>
+</html>

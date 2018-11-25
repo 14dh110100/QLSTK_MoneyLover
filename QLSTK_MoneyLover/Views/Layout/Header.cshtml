@@ -1,0 +1,64 @@
+﻿
+@{
+    Layout = null;
+}
+
+<header class="header_area">
+    <div class="top_menu row m0">
+        <div class="container">
+            <div class="float-left">
+                <a href="mailto:support@moneylover.com">support@moneylover.com</a>
+                @*<a href="#">Welcome to Catalouge</a>*@
+            </div>
+            <div class="float-right">
+                <ul class="header_social">
+                    @*<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                    <li><a href="#"><i class="fa fa-behance"></i></a></li>*@
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="main_menu">
+        <nav class="navbar navbar-expand-lg navbar-light main_box">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <a class="navbar-brand logo_h" href="@Url.Action("Index", "Home")"><img src="~/Templates/listashop/img/logo2.png" alt="" width="227" height="70"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav menu_nav ml-auto" style="margin-right: 2rem;">
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Home")">Trang Chủ</a></li>
+                        @if (Session["userid"] == null)
+                        {
+                            <li class="nav-item"><a class="nav-link" href="@Url.Action("Login", "Home")">Đăng Nhập</a></li>
+                            <li class="nav-item"><a class="nav-link" href="@Url.Action("Register", "Home")">Đăng Ký</a></li>
+                        }
+                        else
+                        {
+                            <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "PassBook")">Sổ Tiết Kiệm</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#" action="logout">Đăng Xuất</a></li>
+                        }
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        @*<li class="nav-item"><a href="#" class="cart"><i class="lnr lnr lnr-cart"></i></a></li>*@
+                        @*<li class="nav-item"><a href="#" class="search"><i class="lnr lnr-magnifier"></i></a></li>*@
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<script>
+    $("[action='logout']").click(function () {
+        alert('Đăng xuất thành công !');
+        //window.location.reload(true);
+        window.location.href = "@Url.Action("Logout", "Home")";
+    });
+</script>

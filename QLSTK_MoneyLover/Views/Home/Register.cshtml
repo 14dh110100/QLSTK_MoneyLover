@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "Đăng Ký";
+    ViewBag.Page = "Login/Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="login_box_area p_120">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="login_box_img">
+                <img class="img-fluid" src="~/Templates/listashop/img/money-lover-img1.jpg" alt="">
+                <div class="hover">
+                    <h4>Đã có tài khoản ?</h4>
+                    @*<p>There are advances being made in science and technology everyday, and a good example of this is the</p>*@
+                    <a class="main_btn" href="@Url.Action("Login", "Home" )">Đăng nhập</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="login_form_inner reg_form">
+                <h3>Đăng ký</h3>
+                <form class="row login_form" action="" method="post" id="registerForm" novalidate="novalidate">
+                    
+                    <div class="col-md-12 form-group">
+                        <input type="text" class="form-control nameinput" id="name" name="name" maxlength="50" placeholder="Tên">
+                        <p class="nostyle" id="errname"></p>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <input type="text" class="form-control unregister" id="username" name="username" maxlength="36" valchecked="" placeholder="Email">
+                        <p class="nostyle" id="errun"></p>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <input type="password" class="form-control pwregister" id="password" name="password" maxlength="36" valchecked="" placeholder="Mật khẩu">
+                        <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                        <p class="nostyle" id="errpw"></p>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <input type="password" class="form-control pwinput" id="repass" name="repass" maxlength="36" placeholder="Nhập lại mật khẩu">
+                        <span toggle="#repass" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                        <p class="nostyle" id="errrepw"></p>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <div class="creat_account">
+                            @*<input type="checkbox" id="f-option2" name="selector">
+                <label for="f-option2">Keep me logged in</label>*@
+                        </div>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <button type="submit" value="submit" class="btn submit_btn">Đăng Ký</button>
+                        @*<a href="#">Forgot Password?</a>*@
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(".unregister").on('input', '', function () {
+        var str = $(this).val();
+        str = str.replace(/[^A-Za-z0-9_.\u0040]/, '');
+        if (/^[A-Za-z0-9_]+[A-Za-z0-9_.]*[\u0040]{1,1}[A-Za-z0-9_]+([.]{1,1}[A-Za-z0-9_]+)*[.]{1,1}[A-Za-z0-9_]{2,}$/.test(str) == false) {
+            $('#errun').text("Nhập sai định dạng email !");
+            $('#errun').attr("style", "color: #c82333; text-align: left; margin-bottom: -8px;");
+            $('#username').attr("valchecked", "");
+        }
+        else {
+            $('#errun').text(" ");
+            $('#errun').attr("style", "");
+            $('#username').attr("valchecked", str);
+        };
+        this.value = str;
+    });
+    $(".pwregister").on('input', '', function () {
+        //debugger;
+        var str = $(this).val();
+        str = str.replace(/ +/g, '');
+        var a = /[0-9]+/.test(str);
+        var b = /[a-zA-Z]+/.test(str);
+        var c = /[~`!#$%^&*\(\)_=+\[\{\]\}\|;:'",<.>\/?\u0040]+/.test(str);
+        if (a == false || b == false || c == false) {
+            $('#errpw').text("Nhập sai định dạng mật khẩu !");
+            $('#errpw').attr("style", "color: #c82333; text-align: left; margin-bottom: -8px;");
+            $('#password').attr("valchecked", "");
+        }
+        else if (str.length < 8) {
+            $('#errpw').text("Mật khẩu tối thiểu có 8 ký tự !");
+            $('#errpw').attr("style", "color: #c82333; text-align: left; margin-bottom: -8px;");
+            $('#password').attr("valchecked", "");
+        }
+        else {
+            $('#errpw').text(" ");
+            $('#errpw').attr("style", "");
+            $('#password').attr("valchecked", str);
+        };
+        this.value = str;
+    });
+    $("#registerForm").submit(function (e) {
+        var registerdata = new FormData();
+        registerdata.append("Name", $("#name").val());
+        registerdata.append("UserName", $("#username").attr("valchecked"));
+        registerdata.append("Password", $("#password").attr("valchecked"));
+        registerdata.append("repass", $("#repass").val());
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("Register", "Home")",
+            data: registerdata,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (res) {
+                $('#errname').text(" ");
+                $('#errun').text(" ");
+                $("#password").val($("#password").attr("valchecked"));
+                $("#username").val($("#username").attr("valchecked"));
+                $('#errpw').text(" ");
+                $('#errrepw').text(" ");
+                $('.nostyle').attr("style", "");
+                if (res.msgname != null) {
+                    $('#errname').text(res.msgname);
+                    $('#errname').attr("style", "color: #c82333; text-align: left; margin-bottom: -8px;");
+                }
+                if (res.msgun != null) {
+                    $('#errun').text(res.msgun);
+                    $('#errun').attr("style", "color: #c82333; text-align: left; margin-bottom: -8px;");
+                }
+                if (res.msgpw != null) {
+                    $('#errpw').text(res.msgpw);
+                    $('#errpw').attr("style", "color: #c82333; text-align: left; margin-bottom: -8px;");
+                }
+                if (res.msgrepw != null) {
+                    $('#errrepw').text(res.msgrepw);
+                    $('#errrepw').attr("style", "color: #c82333; text-align: left; margin-bottom: -8px;");
+                }
+                if (res.msg == "completed") {
+                    alert('Đăng ký thành công !');
+                    window.location.href = "@Url.Action("Index", "PassBook")";
+                }
+            },
+            error: function (res) {
+                console.log(JSON.stringify(res));
+                alert('error');
+            }
+        });
+        return false;
+    });
+</script>

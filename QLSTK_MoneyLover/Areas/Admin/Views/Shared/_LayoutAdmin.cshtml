@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html class="no-js" lang="">
+
+<head>
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Login | Adminpro - Admin Template</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- favicon
+        ============================================ -->
+    <link rel="shortcut icon" type="image/x-icon" href="~/Areas/Admin/Templates/adminpro/img/favicon.ico">
+    <!-- Google Fonts
+        ============================================ -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i,800" rel="stylesheet">
+    <!-- Bootstrap CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Areas/Admin/Templates/adminpro/css/bootstrap.min.css">
+    <!-- Bootstrap CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Areas/Admin/Templates/adminpro/css/font-awesome.min.css">
+    <!-- adminpro icon CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Areas/Admin/Templates/adminpro/css/adminpro-custon-icon.css">
+    <!-- meanmenu icon CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Areas/Admin/Templates/adminpro/css/meanmenu.min.css">
+    <!-- mCustomScrollbar CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Areas/Admin/Templates/adminpro/css/jquery.mCustomScrollbar.min.css">
+    <!-- animate CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Areas/Admin/Templates/adminpro/css/animate.css">
+    <!-- normalize CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Areas/Admin/Templates/adminpro/css/data-table/bootstrap-table.css">
+    <link rel="stylesheet" href="~/Areas/Admin/Templates/adminpro/css/data-table/bootstrap-editable.css">
+    <!-- normalize CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Areas/Admin/Templates/adminpro/css/normalize.css">
+    <!-- form CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Areas/Admin/Templates/adminpro/css/form.css">
+    <!-- style CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Areas/Admin/Templates/adminpro/style.css">
+    <!-- responsive CSS
+        ============================================ -->
+    <link rel="stylesheet" href="~/Areas/Admin/Templates/adminpro/css/responsive.css">
+    <!-- modernizr JS
+        ============================================ -->
+    <script src="~/Areas/Admin/Templates/adminpro/js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
+<body class="materialdesign">
+
+    <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <!-- Header top area start-->
+    <div class="wrapper-pro">
+
+        <!-- Left Panel -->
+        @Html.Action("LeftPanel", "LayoutAdmin")
+        <!-- Left Panel -->
+        <!-- Header top area start-->
+        <div class="content-inner-all">
+            <!-- Header-->
+            @Html.Action("Header", "LayoutAdmin")
+            <!-- /header -->
+            <!-- Header top area end-->
+            <!-- Mobile Menu start -->
+            @Html.Action("MobileMenu", "LayoutAdmin")
+            <!-- Mobile Menu end -->
+            <!-- content Start-->
+            @RenderBody()
+            <!-- content End-->
+        </div>
+    </div>
+
+    <!-- Footer Start-->
+    @Html.Action("Footer", "LayoutAdmin")
+    <!-- Footer End-->
+    <!-- jquery
+        ============================================ -->
+    <script src="~/Areas/Admin/Templates/adminpro/js/vendor/jquery-1.11.3.min.js"></script>
+    <!-- bootstrap JS
+        ============================================ -->
+    <script src="~/Areas/Admin/Templates/adminpro/js/bootstrap.min.js"></script>
+    <!-- meanmenu JS
+        ============================================ -->
+    <script src="~/Areas/Admin/Templates/adminpro/js/jquery.meanmenu.js"></script>
+    <!-- mCustomScrollbar JS
+        ============================================ -->
+    <script src="~/Areas/Admin/Templates/adminpro/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <!-- sticky JS
+        ============================================ -->
+    <script src="~/Areas/Admin/Templates/adminpro/js/jquery.sticky.js"></script>
+    <!-- scrollUp JS
+        ============================================ -->
+    <script src="~/Areas/Admin/Templates/adminpro/js/jquery.scrollUp.min.js"></script>
+    <!-- form validate JS
+        ============================================ -->
+    <script src="~/Areas/Admin/Templates/adminpro/js/jquery.form.min.js"></script>
+    <script src="~/Areas/Admin/Templates/adminpro/js/jquery.validate.min.js"></script>
+    <script src="~/Areas/Admin/Templates/adminpro/js/form-active.js"></script>
+    <!-- counterup JS
+        ============================================ -->
+    <script src="~/Areas/Admin/Templates/adminpro/js/counterup/jquery.counterup.min.js"></script>
+    <script src="~/Areas/Admin/Templates/adminpro/js/counterup/waypoints.min.js"></script>
+    <!-- peity JS
+        ============================================ -->
+    <script src="~/Areas/Admin/Templates/adminpro/js/peity/jquery.peity.min.js"></script>
+    <script src="~/Areas/Admin/Templates/adminpro/js/peity/peity-active.js"></script>
+    <!-- sparkline JS
+        ============================================ -->
+    <script src="~/Areas/Admin/Templates/adminpro/js/sparkline/jquery.sparkline.min.js"></script>
+    <script src="~/Areas/Admin/Templates/adminpro/js/sparkline/sparkline-active.js"></script>
+    <!-- data table JS
+        ============================================ -->
+    <script src="~/Areas/Admin/Templates/adminpro/js/data-table/bootstrap-table.js"></script>
+    <script src="~/Areas/Admin/Templates/adminpro/js/data-table/tableExport.js"></script>
+    <script src="~/Areas/Admin/Templates/adminpro/js/data-table/data-table-active.js"></script>
+    <script src="~/Areas/Admin/Templates/adminpro/js/data-table/bootstrap-table-editable.js"></script>
+    <script src="~/Areas/Admin/Templates/adminpro/js/data-table/bootstrap-editable.js"></script>
+    <script src="~/Areas/Admin/Templates/adminpro/js/data-table/bootstrap-table-resizable.js"></script>
+    <script src="~/Areas/Admin/Templates/adminpro/js/data-table/colResizable-1.5.source.js"></script>
+    <script src="~/Areas/Admin/Templates/adminpro/js/data-table/bootstrap-table-export.js"></script>
+    <!-- main JS
+        ============================================ -->
+    <script src="~/Areas/Admin/Templates/adminpro/js/main.js"></script>
+</body>
+</html>

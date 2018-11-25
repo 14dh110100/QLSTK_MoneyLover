@@ -1,0 +1,70 @@
+﻿@model IEnumerable<QLSTK_MoneyLover.Models.PassBook>
+@using QLSTK_MoneyLover.Models;
+
+@{
+    Layout = "~/Views/Shared/_LayoutBlank.cshtml";
+}
+
+
+<tr><th colspan="2"><h4 style="text-align: left;">@ViewBag.BankAcronym (@ViewBag.BankTotal)</h4></th></tr>
+<tr>
+    <th style="text-align:left">
+        Mã sổ
+    </th>
+    <th style="text-align:left">
+        Tổng số tiền gốc
+    </th>
+    <th>
+        Kỳ hạn gửi
+    </th>
+    <th>
+        Lãi suất năm
+    </th>
+    <th>
+        Ngày mở
+    </th>
+    <th style="text-align:right">Chỉnh sửa</th>
+</tr>
+
+@foreach (var item in Model)
+{
+    DbMoneyLoverEntities db = new DbMoneyLoverEntities();
+    string principal = item.Principal.ToString("#,##0");
+    var openDate = item.OpenDate.ToString("dd'/'MM'/'yyyy");
+    <tr>
+        <td style="text-align:left">
+            <a href="@Url.Action("Details", new { item.Id })">@Html.DisplayFor(modelItem => item.Acronym)</a>
+        </td>
+        <td style="text-align:left">
+            @principal
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Term.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InterestRate) %
+        </td>
+        <td>
+            @openDate
+        </td>
+        <td style="text-align:right">
+            <a href="#actionModal" mycheck="@item.Status" action="deposit" data-id="@item.Id" class="btn btn-action" style="margin: 0" data-toggle="modal" title="Gửi thêm">+</a>
+            <a href="#actionModal" mycheck="@item.Status" action="confirmwithdraw" data-id="@item.Id" class="btn btn-action" style="margin: 0" data-toggle="modal" title="Rút một phần">-</a>
+            <a href="#actionModal" mycheck="@item.Status" action="close" data-id="@item.Id" class="btn btn-action" style="margin: 0" data-toggle="modal" title="Tất toán">x</a>
+        </td>
+    </tr>
+}
+
+
+
+<script>
+    $("a[mycheck]").each(function () {
+        //debugger;
+        var status = parseInt($(this).attr("mycheck"));
+        if (status != 1) {
+            $(this).attr("href", "");
+            $(this).attr("title", "Sổ đã tất toán");
+            $(this).attr("class", "btn btn-actiondisable");
+        };
+    })
+</script>

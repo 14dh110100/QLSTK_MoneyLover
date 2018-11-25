@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!-- Breadcome start-->
+@{string pn = "Index";}
+@Html.Action("Breadcome", "LayoutAdmin", new { pagename = pn })
+<!-- Breadcome End-->
+

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0e553aae399846b2a4bc97a93d721f0d" Name="Diagram1">
+        <EntityTypeShape EntityType="DbMoneyLoverModel.Bank" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbMoneyLoverModel.Customer" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbMoneyLoverModel.PassBook" Width="1.5" PointX="6" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbMoneyLoverModel.RoleAdmin" Width="1.5" PointX="0.75" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbMoneyLoverModel.Term" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbMoneyLoverModel.UserAdmin" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbMoneyLoverModel.Withdraw" Width="1.5" PointX="8.25" PointY="6.625" IsExpanded="true" />
+        <AssociationConnector Association="DbMoneyLoverModel.fk_passbook_bank" ManuallyRouted="false" />
+        <AssociationConnector Association="DbMoneyLoverModel.fk_passbook_customer" ManuallyRouted="false" />
+        <AssociationConnector Association="DbMoneyLoverModel.fk_passbook_term" ManuallyRouted="false" />
+        <AssociationConnector Association="DbMoneyLoverModel.fk_withdraw_passbook" ManuallyRouted="false" />
+        <AssociationConnector Association="DbMoneyLoverModel.fk_useradmin_roleadmin" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DbMoneyLoverModel.Deposit" Width="1.5" PointX="8.25" PointY="3" />
+        <AssociationConnector Association="DbMoneyLoverModel.fk_deposit_passbook" />
+        <EntityTypeShape EntityType="DbMoneyLoverModel.PassbookDetail" Width="1.5" PointX="8.25" PointY="10.125" />
+        <AssociationConnector Association="DbMoneyLoverModel.fk_passbookdetail_passbook" />
+        <EntityTypeShape EntityType="DbMoneyLoverModel.InterestRate" Width="1.5" PointX="3" PointY="4.875" />
+        <AssociationConnector Association="DbMoneyLoverModel.fk_interestrate_bank" />
+        <AssociationConnector Association="DbMoneyLoverModel.fk_interestrate_term" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

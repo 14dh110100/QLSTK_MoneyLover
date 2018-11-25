@@ -1,0 +1,281 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DbMoneyLoverModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Bank">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Acronym" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Acronym" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="IdentityCard" Type="nvarchar" MaxLength="15" />
+    <Property Name="Adress" Type="nvarchar" MaxLength="100" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="36" />
+    <Property Name="Password" Type="nvarchar" MaxLength="36" />
+    <Property Name="Encrypted" Type="nvarchar" MaxLength="72" />
+    <Property Name="Status" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Deposit">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PassBookId" Type="int" Nullable="false" />
+    <Property Name="Acronym" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="DepositDate" Type="datetime" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="InterestRate">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BankId" Type="int" Nullable="false" />
+    <Property Name="TermId" Type="int" Nullable="false" />
+    <Property Name="Acronym" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="Rate" Type="float" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PassBook">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BankId" Type="int" Nullable="false" />
+    <Property Name="TermId" Type="int" Nullable="false" />
+    <Property Name="CustomerId" Type="int" Nullable="false" />
+    <Property Name="Acronym" Type="nvarchar" MaxLength="40" Nullable="false" />
+    <Property Name="Principal" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Balance" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="InterestRate" Type="float" Nullable="false" />
+    <Property Name="DemandInterestRate" Type="float" Nullable="false" />
+    <Property Name="OpenDate" Type="datetime" Nullable="false" />
+    <Property Name="ChangeDate" Type="datetime" Nullable="false" />
+    <Property Name="InterestPayment" Type="int" Nullable="false" />
+    <Property Name="TermEnd" Type="int" />
+    <Property Name="Status" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PassbookDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PassbookId" Type="int" Nullable="false" />
+    <Property Name="Action" Type="nvarchar" MaxLength="15" Nullable="false" />
+    <Property Name="ActionDate" Type="datetime" Nullable="false" />
+    <Property Name="Balance" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Surplus" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RoleAdmin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Acronym" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Term">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Acronym" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="MinDate" Type="int" Nullable="false" />
+    <Property Name="MinPayIn" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserAdmin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
+    <Property Name="Acronym" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="36" />
+    <Property Name="Password" Type="nvarchar" MaxLength="36" />
+    <Property Name="Encrypted" Type="nvarchar" MaxLength="72" />
+    <Property Name="Status" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Withdraw">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PassBookId" Type="int" Nullable="false" />
+    <Property Name="Acronym" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="WithdrawDate" Type="datetime" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="InterestRate" Type="float" Nullable="false" />
+    <Property Name="Status" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="fk_deposit_passbook">
+    <End Role="PassBook" Type="Self.PassBook" Multiplicity="1" />
+    <End Role="Deposit" Type="Self.Deposit" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PassBook">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Deposit">
+        <PropertyRef Name="PassBookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_interestrate_bank">
+    <End Role="Bank" Type="Self.Bank" Multiplicity="1" />
+    <End Role="InterestRate" Type="Self.InterestRate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bank">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InterestRate">
+        <PropertyRef Name="BankId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_interestrate_term">
+    <End Role="Term" Type="Self.Term" Multiplicity="1" />
+    <End Role="InterestRate" Type="Self.InterestRate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Term">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InterestRate">
+        <PropertyRef Name="TermId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_passbook_bank">
+    <End Role="Bank" Type="Self.Bank" Multiplicity="1" />
+    <End Role="PassBook" Type="Self.PassBook" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bank">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PassBook">
+        <PropertyRef Name="BankId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_passbook_customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="PassBook" Type="Self.PassBook" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PassBook">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_passbook_term">
+    <End Role="Term" Type="Self.Term" Multiplicity="1" />
+    <End Role="PassBook" Type="Self.PassBook" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Term">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PassBook">
+        <PropertyRef Name="TermId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_passbookdetail_passbook">
+    <End Role="PassBook" Type="Self.PassBook" Multiplicity="1" />
+    <End Role="PassbookDetail" Type="Self.PassbookDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PassBook">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PassbookDetail">
+        <PropertyRef Name="PassbookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_useradmin_roleadmin">
+    <End Role="RoleAdmin" Type="Self.RoleAdmin" Multiplicity="1" />
+    <End Role="UserAdmin" Type="Self.UserAdmin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoleAdmin">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserAdmin">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_withdraw_passbook">
+    <End Role="PassBook" Type="Self.PassBook" Multiplicity="1" />
+    <End Role="Withdraw" Type="Self.Withdraw" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PassBook">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Withdraw">
+        <PropertyRef Name="PassBookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DbMoneyLoverModelStoreContainer">
+    <EntitySet Name="Bank" EntityType="Self.Bank" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Deposit" EntityType="Self.Deposit" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InterestRate" EntityType="Self.InterestRate" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PassBook" EntityType="Self.PassBook" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PassbookDetail" EntityType="Self.PassbookDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RoleAdmin" EntityType="Self.RoleAdmin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Term" EntityType="Self.Term" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserAdmin" EntityType="Self.UserAdmin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Withdraw" EntityType="Self.Withdraw" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk_deposit_passbook" Association="Self.fk_deposit_passbook">
+      <End Role="PassBook" EntitySet="PassBook" />
+      <End Role="Deposit" EntitySet="Deposit" />
+    </AssociationSet>
+    <AssociationSet Name="fk_interestrate_bank" Association="Self.fk_interestrate_bank">
+      <End Role="Bank" EntitySet="Bank" />
+      <End Role="InterestRate" EntitySet="InterestRate" />
+    </AssociationSet>
+    <AssociationSet Name="fk_interestrate_term" Association="Self.fk_interestrate_term">
+      <End Role="Term" EntitySet="Term" />
+      <End Role="InterestRate" EntitySet="InterestRate" />
+    </AssociationSet>
+    <AssociationSet Name="fk_passbook_bank" Association="Self.fk_passbook_bank">
+      <End Role="Bank" EntitySet="Bank" />
+      <End Role="PassBook" EntitySet="PassBook" />
+    </AssociationSet>
+    <AssociationSet Name="fk_passbook_customer" Association="Self.fk_passbook_customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="PassBook" EntitySet="PassBook" />
+    </AssociationSet>
+    <AssociationSet Name="fk_passbook_term" Association="Self.fk_passbook_term">
+      <End Role="Term" EntitySet="Term" />
+      <End Role="PassBook" EntitySet="PassBook" />
+    </AssociationSet>
+    <AssociationSet Name="fk_passbookdetail_passbook" Association="Self.fk_passbookdetail_passbook">
+      <End Role="PassBook" EntitySet="PassBook" />
+      <End Role="PassbookDetail" EntitySet="PassbookDetail" />
+    </AssociationSet>
+    <AssociationSet Name="fk_useradmin_roleadmin" Association="Self.fk_useradmin_roleadmin">
+      <End Role="RoleAdmin" EntitySet="RoleAdmin" />
+      <End Role="UserAdmin" EntitySet="UserAdmin" />
+    </AssociationSet>
+    <AssociationSet Name="fk_withdraw_passbook" Association="Self.fk_withdraw_passbook">
+      <End Role="PassBook" EntitySet="PassBook" />
+      <End Role="Withdraw" EntitySet="Withdraw" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,61 @@
+﻿@model QLSTK_MoneyLover.Models.PassBook
+
+@{
+    ViewBag.Title = "Chi Tiết Sổ Tiết Kiệm";
+    ViewBag.Page = "Passbook Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="order_details p_120">
+        <div class="card mb-3">
+            <div class="card-header" style="background-color: #fad390;">
+                <i class="glyphicon glyphicon-info-sign"></i>
+                <h4 style="margin: 0px; color: #222222; text-align: center;">CHI TIẾT SỔ TIẾT KIỆM</h4>
+            </div>
+            <div class="card-body">
+                <div class="row order_d_inner">
+                    <div class="col-lg-6">
+                        <div class="details_item">
+                            <h4>@Model.Acronym</h4>
+                            <ul class="list">
+                                <li><div><span>Trạng thái</span> : @ViewBag.Status</div></li>
+                                <li><div><span>Tổng số tiền gốc</span> : @Model.Principal.ToString("#,##0")</div></li>
+                                <li><div><span>Số dư hiện tại</span> : @Model.Balance.ToString("#,##0")</div></li>
+                                <li><div><span>Ngày gửi</span> : @Model.OpenDate.ToString("dd'/'MM'/'yyyy hh':'mm':'ss tt")</div></li>
+                                <li><div><span>Ngày bắt đầu tính lãi</span> : @Model.ChangeDate.ToString("dd'/'MM'/'yyyy hh':'mm':'ss tt")</div></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="details_item" style="margin-top: 0.7em;">
+                            <ul class="list">
+                                <li><div><span>Ngân hàng</span> : @Html.DisplayFor(model => model.Bank.Name)</div></li>
+                                <li><div><span>Kỳ hạn</span> : @Html.DisplayFor(model => model.Term.Name)</div></li>
+                                <li><div><span>Lãi suất</span> : @ViewBag.Rate %/năm</div></li>
+                                <li><div><span>Lãi suất không kỳ hạn</span> : @ViewBag.DemandRate %/năm</div></li>
+                                <li><div><span>Trả lãi</span> : @ViewBag.IRP</div></li>
+                                <li><div><span>Khi đến hạn</span> : @ViewBag.TermEnd</div></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <center>
+                    <a href="#largeModal" action="edit" data-id="@Model.Id" class="btn btn-action-details" style="margin: auto auto 10px 5px;" data-toggle="modal" title="Chỉnh sửa">Chỉnh sửa</a>
+                    <br />
+                    <a href="#actionModal" action="deposit" data-id="@Model.Id" class="btn btn-action-details" style="margin-left:0" data-toggle="modal" title="Gửi thêm">Gửi thêm</a>
+                    <a href="#actionModal" action="confirmwithdraw" data-id="@Model.Id" class="btn btn-action-details" style="margin-left: 0" data-toggle="modal" title="Rút một phần">Rút một phần</a>
+                    <a href="#actionModal" action="close" data-id="@Model.Id" class="btn btn-action-details" style="margin-left: 0" data-toggle="modal" title="Tất toán">Tất toán</a>
+                </center>
+            </div>
+        </div>
+        @Html.Action("PbDetails", "PassBook", new { Model.Id })
+</section>
+
+<script>
+    if (@Model.Status != 1) {
+        $(".btn-action-details").attr("href", "");
+        $(".btn-action-details").attr("title", "Sổ đã tất toán");
+        $(".btn-action-details").attr("class", "btn btn-actiondisable");
+    };
+</script>

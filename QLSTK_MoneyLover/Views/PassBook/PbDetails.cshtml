@@ -1,0 +1,56 @@
+﻿@model IEnumerable<QLSTK_MoneyLover.Models.PassbookDetail>
+
+@{
+    ViewBag.Title = "Lịch Sử Sổ";
+    Layout = "~/Views/Shared/_LayoutBlank.cshtml";
+}
+
+
+<div class="order_details_table">
+    <h2>Lịch sử giao dịch</h2>
+    <div class="table-responsive">
+        <table class="table" style="text-align: right;">
+            <tr>
+                <th style="text-align: left;">
+                    Thao tác
+                </th>
+                <th style="text-align: center; padding-left: 3rem;">
+                    Ngày thực hiện
+                </th>
+                <th style="padding-right: 4rem;">
+                    Số dư ban đầu
+                </th>
+                <th style="padding-right: 6rem;">
+                    Số tiền
+                </th>
+                <th>
+                    Còn lại
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="text-align: left;">
+                        @Html.DisplayFor(modelItem => item.Action)
+                    </td>
+                    <td style="text-align: center; padding-left: 3rem;">
+                        @item.ActionDate.ToString("dd'/'MM'/'yyyy hh':'mm':'ss tt")
+                    </td>
+                    <td style="padding-right: 4rem;">
+                        @item.Balance.ToString("#,##0")
+                    </td>
+                    <td style="padding-right: 6rem;">
+                        @item.Amount.ToString("#,##0")
+                    </td>
+                    <td>
+                        @item.Surplus.ToString("#,##0")
+                    </td>
+                </tr>
+            }
+
+            <tr class="noborder"><th colspan="2" style="text-align: right; padding-left: 3rem; border-top: 1px solid #ddd;"><span style="margin-right: 3rem;">Tiền gửi:</span></th><th style="padding-right: 4rem; border-top: 1px solid #ddd;"></th><th  style="padding-right: 6rem; border-top: 1px solid #ddd;">@ViewBag.DepTotal</th><th style="border-top: 1px solid #ddd;"></th></tr>
+            <tr class="noborder"><th colspan="2" style="text-align: right; padding-left: 3rem;"><span style="margin-right: 3rem;">Tiền rút:</span></th><th style="padding-right: 4rem;"></th><th style="padding-right: 6rem;">@ViewBag.WdTotal</th><th></th></tr>
+            <tr class="noborder"><th colspan="2" style="text-align: right; padding-left: 3rem; border-top: 1px solid #ddd;"><span style="margin-right: 3rem;">Tổng cuối:</span></th><th style="padding-right: 4rem; border-top: 1px solid #ddd;">@ViewBag.Principal</th><th style="padding-right: 6rem; border-top: 1px solid #ddd;">@ViewBag.Total</th><th style="border-top: 1px solid #ddd;">@ViewBag.Balance</th></tr>
+        </table>
+    </div>
+</div>

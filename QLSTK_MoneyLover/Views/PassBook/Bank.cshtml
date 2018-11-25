@@ -1,0 +1,40 @@
+﻿@model IEnumerable<QLSTK_MoneyLover.Models.Bank>
+@using QLSTK_MoneyLover.Models;
+
+@{
+    Layout = "~/Views/Shared/_LayoutBlank.cshtml";
+    DbMoneyLoverEntities db = new DbMoneyLoverEntities();
+}
+
+<div class="order_details_table" style="margin-top: 0;">
+    <h3 style="text-align:center; margin-left: 2rem;">SỔ TIẾT KIỆM 
+        <span><a class="btn btn-action" style="float: right;" id="create" title="Thêm sổ tiết kiệm" data-toggle="modal" data-target="#largeModal">+</a></span>
+    </h3>
+    <h4 style="text-align:center;">Tổng tiền: @ViewBag.Total</h4>
+    <hr />
+    <div class="table-responsive">
+        <table class="table" style="width:100%; text-align:center">
+            @foreach (var item in Model)
+            {
+                if (Session["userid"] != null)
+                {
+                    int userid = int.Parse(Session["userid"].ToString());
+                    int count = db.PassBooks.Where(n => n.BankId == item.Id && n.CustomerId == userid && n.Status == 1).Count();
+                    if (count > 0)
+                    {
+                        @Html.Action("PassBookList", "PassBook", new { item.Id })
+                    }
+                }
+            }
+            @if (Session["userid"] != null)
+            {
+                int userid = int.Parse(Session["userid"].ToString());
+                int count = db.PassBooks.Where(n => n.CustomerId == userid && n.Status == 2).Count();
+                if (count > 0)
+                {
+                    @Html.Action("PassBookList", "PassBook", new { id = 0 })
+                }
+            }
+        </table>
+    </div>
+</div>

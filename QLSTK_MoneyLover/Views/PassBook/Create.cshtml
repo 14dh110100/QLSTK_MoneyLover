@@ -1,0 +1,260 @@
+﻿@model QLSTK_MoneyLover.Models.PassBook
+@using QLSTK_MoneyLover.Models
+
+@{
+    ViewBag.Title = "Thêm Mới Sổ";
+    Layout = "~/Views/Shared/_LayoutBlank.cshtml";
+}
+
+@using (Html.BeginForm("Create", "PassBook", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        <div class="row">
+            <div class="col-md-6 form-group">
+                @Html.LabelFor(model => model.BankId, "Ngân hàng (Tên viết tắt) :", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    <input list="banklist" name="bankid" class = "form-control" id = "bankid" maxstr = "20">
+                      <datalist id="banklist">
+                        @foreach (var item in ViewBag.BankId)
+                        {
+                            <option value="@item.Text" />
+                        }
+                      </datalist>
+                    @*@Html.DropDownList("BankId", null, "---Select---", htmlAttributes: new { @class = "form-control", id = "bankid" })*@
+                    @Html.ValidationMessageFor(model => model.BankId, "", new { @class = "text-danger", id = "errbankid" })
+                </div>
+            </div>
+
+            <div class="col-md-6 form-group">
+                @Html.LabelFor(model => model.TermId, "Kỳ hạn :", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownList("TermId", null, "---Lựa chọn---", htmlAttributes: new { @class = "form-control", id = "termid" })
+                    @Html.ValidationMessageFor(model => model.TermId, "", new { @class = "text-danger", id = "errtermid" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6 form-group">
+                @Html.LabelFor(model => model.InterestRate, "Lãi suất (%/năm) :", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.InterestRate, new { htmlAttributes = new { @class = "form-control irinput", maxstr = "6", id = "ir" } })
+                    @Html.ValidationMessageFor(model => model.InterestRate, "", new { @class = "text-danger", id = "errir" })
+                </div>
+            </div>
+
+            <div class="col-md-6 form-group">
+                @Html.LabelFor(model => model.DemandInterestRate, "Lãi suất không kỳ hạn (Mặc định: 0.05) :", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.DemandInterestRate, new { htmlAttributes = new { @class = "form-control dirinput", maxstr = "6", id = "demandir" } })
+                    @Html.ValidationMessageFor(model => model.DemandInterestRate, "", new { @class = "text-danger", id = "errdemandir" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 form-group">
+                @Html.LabelFor(model => model.Acronym, "Mã sổ :", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.Acronym, new { htmlAttributes = new { @class = "form-control acronym", maxstr = "40", id = "acronym" } })
+                    @Html.ValidationMessageFor(model => model.Acronym, "", new { @class = "text-danger", id = "erracronym" })
+                </div>
+            </div>
+
+            <div class="col-md-6 form-group">
+                @Html.LabelFor(model => model.Principal, "Số tiền gửi :", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.Principal, new { htmlAttributes = new { @class = "form-control moneyinput", maxstr = "12", id = "principal" } })
+                    @Html.ValidationMessageFor(model => model.Principal, "", new { @class = "text-danger", id = "errprincipal" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 form-group">
+                @Html.LabelFor(model => model.InterestPayment, "Trả lãi :", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownList("IpList", null, htmlAttributes: new { @class = "form-control", id = "ip" })
+                    @Html.ValidationMessageFor(model => model.InterestPayment, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-6 form-group">
+                @Html.LabelFor(model => model.TermEnd, "Khi đến hạn :", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownList("TermEndList", null, htmlAttributes: new { @class = "form-control", id = "termend" })
+                    @Html.ValidationMessageFor(model => model.TermEnd, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 form-group">
+                @Html.LabelFor(model => model.OpenDate, "Ngày gửi :", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.OpenDate, new { htmlAttributes = new { @class = "form-control", type = "date", id = "opendate" } })
+                    @Html.ValidationMessageFor(model => model.OpenDate, "", new { @class = "text-danger", id = "erropendate" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-12" style="margin-top: 1rem;">
+                <center><input type="button" id="btnSave" value="Xác nhận" class="btn btn-input" /></center>
+                @*<input type="submit" value="Create" class="btn btn-default" />*@
+            </div>
+        </div>
+    </div>
+}
+
+
+<script>
+    //debugger;
+    var tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    var today = (new Date(Date.now() - tzoffset)).toISOString().slice(0, 10);
+    $("#opendate").val(today);
+    function findir(bankid, termid) {
+        if (bankid != null && termid != null) {
+            var data2 = new FormData();
+            data2.append("bankid", bankid);
+            data2.append("termid", termid);
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("CheckIR", "PassBook")",
+                data: data2,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    $('#errir').text(" ");
+                    $('#errdemandir').text(" ");
+                    var ir = res.rate;
+                    var demandir = res.demandrate;
+                    //if (res.rate == "0") {
+                    //    $('#errir').text("Not found !");
+                    //}
+                    //if (res.demandrate == "0") {
+                    //    $('#errdemandir').text("Not found !");
+                    //}
+                    $('#ir').val(ir);
+                    $('#demandir').val(demandir);
+                    //document.getElementById("ir").value = ir;
+                    //document.getElementById("demandir").value = demandir;
+                },
+                error: function (res) {
+                    console.log(JSON.stringify(res));
+                    alert('error');
+                }
+            });
+        }
+    };
+
+    $(document).ready(function () {
+        //debugger;
+        var bank = "[bank]", term = "[term]";
+        var bankid = null, termid = null;
+        var acronym = this.getElementById("acronym");
+        $('#bankid').on('input', '', function (e) {
+            //debugger;
+            bank = this.value;
+            bank = bank.replace(/[^a-zA-Z]/, '');
+            bank = bank.capitalize();
+            this.value = bank.replace(/ +/g, '');
+            if (bank == "") {
+                bank = "[bank]";
+            }
+            $('#errbankid').text(" ");
+            bankid = this.value;
+            findir(bankid, termid);
+            acronym.value = bank + "_" + term + "_";
+            $('#erracronym').text(" ");
+        });
+
+        $('#termid').on('change', '', function (e) {
+            term = this.options[this.selectedIndex].text;
+            if (term == "---Lựa chọn---") {
+                term = "[term]";
+            }
+            $('#errtermid').text(" ");
+            termid = this.value;
+            findir(bankid, termid);
+            acronym.value = bank + "_" + term + "_";
+            $('#erracronym').text(" ");
+        });
+    
+        $("#btnSave").click(function () {
+            //debugger;
+            var formData = new FormData();
+
+            formData.append("CustomerId", @ViewBag.UserId);
+            formData.append("acrbank", $("#bankid").val());
+            formData.append("TermId", $("#termid").val());
+            formData.append("Acronym", $("#acronym").val());
+            formData.append("Principal", $("#principal").val());
+            formData.append("InterestRate", $("#ir").val());
+            formData.append("DemandInterestRate", $("#demandir").val());
+            formData.append("InterestPayment", $("#ip").val());
+            formData.append("TermEnd", $("#termend").val());
+            formData.append("OpenDate", $("#opendate").val());
+            
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Create","PassBook")",
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    //debugger;
+                    console.log(JSON.stringify(res));
+                    $('#errbankid').text(" ");
+                    $('#errtermid').text(" ");
+                    $('#errir').text(" ");
+                    $('#errdemandir').text(" ");
+                    $('#erracronym').text(" ");
+                    $('#errprincipal').text(" ");
+                    $('#erropendate').text(" ");
+                    if (res.msgbankid != null) {
+                        $('#errbankid').text(res.msgbankid);
+                    }
+                    if (res.msgtermid != null) {
+                        $('#errtermid').text(res.msgtermid);
+                    }
+                    if (res.msgir != null) {
+                        $('#errir').text(res.msgir);
+                    }
+                    if (res.msgdemandir != null) {
+                        $('#errdemandir').text(res.msgdemandir);
+                    }
+                    if (res.msgacronym != null) {
+                        $('#erracronym').text(res.msgacronym);
+                    }
+                    if (res.msgprincipal != null) {
+                        $('#errprincipal').text(res.msgprincipal);
+                    }
+                    if (res.msgopendate != null) {
+                        $('#erropendate').text(res.msgopendate);
+                    }
+                    if (res.msg == "completed") {
+                        $("#largeModal").modal("hide");
+                        alert('Thêm thành công !');
+                        //window.location.reload(true);
+                        window.location.href = ("@Url.Action("Details", "PassBook")/" + res.pbid)
+                    }
+                },
+                error: function (res) {
+                    //debugger;
+                    console.log(JSON.stringify(res));
+                    $("#largeModal").modal("hide");
+                    alert('error');
+                    //window.location.href = ("@Url.Action("Details","Sanhs")/" + data.MaSanh);
+                }
+            })
+        })
+    })
+</script>

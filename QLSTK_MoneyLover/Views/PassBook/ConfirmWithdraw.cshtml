@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Xác Nhận Rút Tiền";
+    Layout = "~/Views/Shared/_LayoutBlank.cshtml";
+}
+
+<div class="order_d_inner">
+    <div class="col-lg-12">
+        <div class="details_item">
+            <h4>@ViewBag.Acronym</h4>
+            @*<div style="margin-left: 12%; margin-top: 1rem;">
+                <ul class="list">
+                    <li><div><span>TermendDate</span> : @ViewBag.TermendDate.ToString("dd'/'MM'/'yyyy hh':'mm':'ss tt")</div></li>
+                    <li><div><span>DemandInterestRate</span> : @ViewBag.DemandRate %/năm</div></li>
+                </ul>
+            </div>*@
+            <center><h3>Chú ý!</h3></center>
+            <p class="" style="margin-top: 1rem; color: black; font-size: 1rem">
+                Sổ tiết kiệm <b>@ViewBag.Acronym</b> đến hạn ngày <b>@ViewBag.TermendDate.ToString("dd'/'MM'/'yyyy hh':'mm':'ss tt")</b>.
+                Số tiền rút ra trước hạn sẽ được tính lãi theo lãi suất không kỳ hạn (<b>@ViewBag.DemandRate %/năm</b>).<br />
+                Bạn có muốn tiếp tục ?
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-12">
+        <center><input type="button" id="btnSave" style="margin-top: 0;" value="Xác nhận" class="btn btn-input" /></center>
+    </div>
+</div>
+
+<script>
+    $("#btnSave").click(function () {
+        $("#body-content").empty();
+        $("#titleModal").empty();
+        var txt = "Rút một phần";
+        $("#titleModal").append(txt);
+        $("#body-content").load("@Url.Action("Withdraw")/" + @ViewBag.PassbookId);
+
+    });
+</script>

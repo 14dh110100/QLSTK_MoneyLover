@@ -1,0 +1,82 @@
+﻿@model QLSTK_MoneyLover.Models.Deposit
+
+@{
+    ViewBag.Title = "Gửi Tiền";
+    Layout = "~/Views/Shared/_LayoutBlank.cshtml";
+}
+
+
+@using (Html.BeginForm("Deposit", "PassBook", FormMethod.Post, new { @enctype = "multipart/form-data" })) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>@ViewBag.Acronym</h4>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.Amount, "Số tiền gửi :", htmlAttributes: new { @class = "control-label col-md-12" })
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control moneyinput", maxstr = "12", id = "amount" } })
+                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger", id = "erramount" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-12" style="margin-top: 1.5rem;">
+                <center>
+                    <p class="" style="color: #c82333;" id="errcheck"></p>
+                    <input type="button" id="btnSave" value="Xác nhận" class="btn btn-input" />
+                </center>
+                @*<input type="submit" value="Create" class="btn btn-default" />*@
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    //debugger;
+    if (@ViewBag.Active == false) {
+        $("#amount").prop("disabled", "disabled");
+        $("#btnSave").prop("disabled", "disabled");
+        $("#btnSave").attr("class", "btn btn-disable");
+        $('#errcheck').text('Chưa đến kỳ hạn, không thể gửi thêm !');
+    };
+    $(document).ready(function () {
+        $("#btnSave").click(function () {
+            var formData = new FormData();
+            
+            formData.append("Amount", $("#amount").val());
+            //debugger;
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Deposit","PassBook")",
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    //debugger;
+                    console.log(JSON.stringify(data));
+                    $('#erramount').text(" ");
+                    if (data.msgamount != null) {
+                        $('#erramount').text(data.msgamount);
+                    }
+                    if (data.msg == "completed") {
+                        $("#actionModal").modal("hide");
+                        alert('Đã gửi !');
+                        window.location.reload(true);
+                        //window.location.href = ("@Url.Action("Details", "PassBook")/" + data.PassBookId)
+                    }
+                },
+                error: function (data) {
+                    //debugger;
+                    console.log(JSON.stringify(data));
+                    $("#actionModal").modal("hide");
+                    alert('error');
+                    //window.location.href = ("@Url.Action("Details","Sanhs")/" + data.MaSanh);
+                }
+            })
+        })
+    })
+</script>

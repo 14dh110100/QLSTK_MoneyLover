@@ -1,0 +1,89 @@
+﻿@model QLSTK_MoneyLover.Models.Withdraw
+
+@{
+    ViewBag.Title = "Tất Toán";
+    Layout = "~/Views/Shared/_LayoutBlank.cshtml";
+}
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="order_d_inner">
+            <div class="col-lg-12">
+                <div class="details_item">
+                    <h4>@ViewBag.Acronym</h4>
+                    <div style="margin-left: 12%">
+                        <ul class="list">
+                            <li><div><span>Tổng số tiền gốc</span> : @ViewBag.Principal.ToString("#,##0")</div></li>
+                            <li><div><span>Số dư hiện tại</span> : @ViewBag.Balance.ToString("#,##0")</div></li>
+                            <li><div><span>Lãi suất kỳ hạn</span> : @ViewBag.Interest.ToString("#,##0")</div></li>
+                            <li><div><span>Lãi suất không kỳ hạn</span> : @ViewBag.InterestKKH.ToString("#,##0")</div></li>
+                            <li><div><span>Tổng tiền</span> : @ViewBag.Total.ToString("#,##0")</div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-12" style="margin-top: 1rem;">
+                <center>
+                    <p class="" style="color: #c82333;" id="errcheck"></p>
+                    <input type="button" id="btnSave" value="Xác nhận" class="btn btn-input" />
+                </center>
+                @*<input type="submit" value="Create" class="btn btn-default" />*@
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    //if (true == true) {
+    //    $("#btnSave").prop("disabled", "disabled");
+    //    $("#btnSave").attr("class", "btn btn-disable");
+    //    $('#errcheck').text('Chức năng đang được phát triển !');
+    //};
+
+    $("#btnSave").click(function () {
+        //debugger;
+            var formData = new FormData();
+
+            formData.append("PassBookId", @ViewBag.PbId);
+            
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Close","PassBook")",
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    //debugger;
+                    console.log(JSON.stringify(res));
+                    $('#error').text(" ");
+                    if (res.msgerr != null) {
+                        $('#error').text(res.msgerr);
+                    }
+                    if (res.msg == "completed") {
+                        $("#actionModal").modal("hide");
+                        alert('Đã đóng !');
+                        window.location.reload(true);
+                        //window.location.href = ("@Url.Action("Details", "PassBook")/" + res.pbid)
+                    }
+                },
+                error: function (res) {
+                    //debugger;
+                    console.log(JSON.stringify(res));
+                    $("#actionModal").modal("hide");
+                    alert('error');
+                    //window.location.href = ("@Url.Action("Details","Sanhs")/" + data.MaSanh);
+                }
+            })
+    });
+</script>

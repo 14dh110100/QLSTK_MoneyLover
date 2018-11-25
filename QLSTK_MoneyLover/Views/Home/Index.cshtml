@@ -1,0 +1,127 @@
+﻿@{
+    ViewBag.Title = "Trang Chủ";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="~/Templates/listashop/img/favicon2.png" type="image/png">
+    <title>Money Lover</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Templates/listashop/css/bootstrap.css">
+    <link rel="stylesheet" href="~/Templates/listashop/vendors/linericon/style.css">
+    <link rel="stylesheet" href="~/Templates/listashop/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Templates/listashop/vendors/owl-carousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Templates/listashop/vendors/lightbox/simpleLightbox.css">
+    <link rel="stylesheet" href="~/Templates/listashop/vendors/nice-select/~/Templates/listashop/css/nice-select.css">
+    <link rel="stylesheet" href="~/Templates/listashop/vendors/animate-~/Templates/listashop/css/animate.css">
+    <link rel="stylesheet" href="~/Templates/listashop/vendors/jquery-ui/jquery-ui.css">
+    <!-- main css -->
+    <link rel="stylesheet" href="~/Templates/listashop/css/style.css">
+    <link rel="stylesheet" href="~/Templates/listashop/css/responsive.css">
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="~/Templates/listashop/js/jquery-3.2.1.min.js"></script>
+    <script src="~/Templates/listashop/js/popper.js"></script>
+    <script src="~/Templates/listashop/js/bootstrap.min.js"></script>
+    <script src="~/Templates/listashop/js/stellar.js"></script>
+    <script src="~/Templates/listashop/vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="~/Templates/listashop/vendors/nice-select/~/Templates/listashop/js/jquery.nice-select.min.js"></script>
+    <script src="~/Templates/listashop/vendors/isotope/imagesloaded.pkgd.min.js"></script>
+    <script src="~/Templates/listashop/vendors/isotope/isotope-min.js"></script>
+    <script src="~/Templates/listashop/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/Templates/listashop/js/jquery.ajaxchimp.min.js"></script>
+    <script src="~/Templates/listashop/js/mail-script.js"></script>
+    <script src="~/Templates/listashop/vendors/jquery-ui/jquery-ui.js"></script>
+    <script src="~/Templates/listashop/vendors/counter-up/jquery.waypoints.min.js"></script>
+    <script src="~/Templates/listashop/vendors/counter-up/jquery.counterup.js"></script>
+    <script src="~/Templates/listashop/js/theme.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        .mySlides {
+            display: none;
+            width: 80%;
+            height: 50%;
+            margin-bottom: 2rem;
+        }
+
+        .w3-left, .w3-right, .w3-badge {
+            cursor: pointer
+        }
+
+        .w3-badge {
+            height: 13px;
+            width: 13px;
+            padding: 0
+        }
+    </style>
+</head>
+<body class="homebody">
+    <div class="center">
+        <div class="" style="width: 95%;">
+            <center class="">
+                <div class="w3-content w3-display-container">
+                    <img class="mySlides" src="~/Templates/listashop/img/favicon2.png">
+                    <img class="mySlides" src="~/Templates/listashop/img/favicon2.png">
+                    <img class="mySlides" src="~/Templates/listashop/img/favicon2.png">
+                    <img class="mySlides" src="~/Templates/listashop/img/favicon2.png">
+                    <img class="mySlides" src="~/Templates/listashop/img/favicon2.png">
+                    <div style="padding-bottom: 3rem; color: white">
+                        Lên kế hoạch tài chính thông minh và từng <br /> bước tiết kiệm để hiện thực hóa ước mơ.
+                    </div>
+                    <div class="w3-center w3-display-bottommiddle" style="width:100%">
+                        @*<div class="w3-left" onclick="plusDivs(-1)">&#10094;</div>
+                        <div class="w3-right" onclick="plusDivs(1)">&#10095;</div>*@
+                        <span class="w3-badge demo w3-border" onclick="currentDiv(1)"></span>
+                        <span class="w3-badge demo w3-border" onclick="currentDiv(2)"></span>
+                        <span class="w3-badge demo w3-border" onclick="currentDiv(3)"></span>
+                        <span class="w3-badge demo w3-border" onclick="currentDiv(4)"></span>
+                        <span class="w3-badge demo w3-border" onclick="currentDiv(5)"></span>
+                    </div>
+                </div>
+            </center>
+            <center class="">
+                <center>
+                    <a href="@Url.Action("Register", "Home")" class="btn btn-register" style="margin-top: 2rem; width: 100%" title="Đăng ký">LẦN ĐẦU SỬ DỤNG MONEY LOVER</a>
+                    <br />
+                    <a href="@Url.Action("Login", "Home")" class="btn btn-login" style="margin-top: 1rem;  width: 100%" title="Đăng nhập">ĐÃ SỬ DỤNG MONEY LOVER</a>
+
+                </center>
+            </center>
+        </div>
+    </div>
+    <script>
+        var slideIndex = 1;
+        showDivs(slideIndex);
+
+        function plusDivs(n) {
+            showDivs(slideIndex += n);
+        }
+
+        function currentDiv(n) {
+            showDivs(slideIndex = n);
+        }
+
+        function showDivs(n) {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+            if (n > x.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = x.length }
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" w3-white", "");
+            }
+            x[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " w3-white";
+        }
+    </script>
+</body>
+</html>
