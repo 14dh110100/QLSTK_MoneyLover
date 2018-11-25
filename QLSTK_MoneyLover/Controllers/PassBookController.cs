@@ -144,7 +144,8 @@ namespace QLSTK_MoneyLover.Controllers
                 passBook.DemandInterestRate = 0.05;
                 if (passBook.TermId != 0)
                 {
-                    if (passBook.Term.Acronym == "KKH")
+                    Term term = db.Terms.Find(passBook.TermId);
+                    if (term.Acronym == "KKH")
                     {
                         passBook.DemandInterestRate = passBook.InterestRate;
                     }
@@ -160,8 +161,7 @@ namespace QLSTK_MoneyLover.Controllers
             }
             else
             {
-                int userid = int.Parse(Session["userid"].ToString());
-                int pbcount = db.PassBooks.Where(n => n.Acronym == passBook.Acronym && n.Status == 1 && n.CustomerId == userid).Count();
+                int pbcount = db.PassBooks.Where(n => n.Acronym == passBook.Acronym && n.Status == 1 && n.CustomerId == passBook.CustomerId).Count();
                 if (pbcount > 0)
                 {
                     msgacronym = "Sổ này đang mở !";
@@ -272,7 +272,8 @@ namespace QLSTK_MoneyLover.Controllers
             if (passBook.DemandInterestRate == 0)
             {
                 passBook.DemandInterestRate = 0.05;
-                if (passBook.TermId != 0)
+                Term term = db.Terms.Find(passBook.TermId);
+                if (term.Acronym == "KKH")
                 {
                     if (passBook.Term.Acronym == "KKH")
                     {
@@ -290,10 +291,9 @@ namespace QLSTK_MoneyLover.Controllers
             }
             else
             {
-                int userid = int.Parse(Session["userid"].ToString());
                 var oldPb = db.PassBooks.Where(n => n.Id == passBook.Id);
                 var pbexc = db.PassBooks.Except(oldPb);
-                int pbcount = pbexc.Where(n => n.Acronym == passBook.Acronym && n.Status == 1 && n.CustomerId == userid).Count();
+                int pbcount = pbexc.Where(n => n.Acronym == passBook.Acronym && n.Status == 1 && n.CustomerId == passBook.CustomerId).Count();
                 if (pbcount > 0)
                 {
                     msgacronym = "Sổ này đang mở !";
