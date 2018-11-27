@@ -175,6 +175,7 @@
     <Compile Include="Areas\Admin\Controllers\DepositsController.cs" />
     <Compile Include="Areas\Admin\Controllers\InterestRatesController.cs" />
     <Compile Include="Areas\Admin\Controllers\LayoutAdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PassbookDetailsController.cs" />
     <Compile Include="Areas\Admin\Controllers\PassBooksController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoleAdminsController.cs" />
     <Compile Include="Areas\Admin\Controllers\TermsController.cs" />
@@ -562,6 +563,11 @@
     <Content Include="Areas\Admin\Views\PassBooks\Details.cshtml" />
     <Content Include="Areas\Admin\Views\PassBooks\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\PassBooks\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\PassbookDetails\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\PassbookDetails\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\PassbookDetails\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\PassbookDetails\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\PassbookDetails\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

@@ -50,7 +50,7 @@ namespace QLSTK_MoneyLover.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,BankId,TermId,CustomerId,Acronym,Balance,OpenDate,InterestPayment,TermEnd,Status,Principal,ChangeDate")] PassBook passBook)
+        public ActionResult Create([Bind(Include = "Id,BankId,TermId,CustomerId,Acronym,Balance,OpenDate,InterestPayment,TermEnd,Status,Principal,ChangeDate,InterestRate,DemandInterestRate")] PassBook passBook)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace QLSTK_MoneyLover.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,BankId,TermId,CustomerId,Acronym,Balance,OpenDate,InterestPayment,TermEnd,Status,Principal,ChangeDate")] PassBook passBook)
+        public ActionResult Edit([Bind(Include = "Id,BankId,TermId,CustomerId,Acronym,Balance,OpenDate,InterestPayment,TermEnd,Status,Principal,ChangeDate,InterestRate,DemandInterestRate")] PassBook passBook)
         {
             if (ModelState.IsValid)
             {
