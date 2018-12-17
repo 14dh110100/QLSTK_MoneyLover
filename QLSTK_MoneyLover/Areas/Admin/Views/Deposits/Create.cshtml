@@ -50,7 +50,10 @@
 
         <div class="form-group">
             <div class="col-md-12" style="margin-top: 1rem;">
-                <center><input type="button" id="btnSave" value="Create" class="btn btn-input" /></center>
+                <center>
+                    <p style="color: #c82333;" id="errmsg"></p>
+                    <input type="button" id="btnSave" value="Create" class="btn btn-input" />
+                </center>
             </div>
         </div>
     </div>
@@ -60,8 +63,58 @@
     var tzoffset = (new Date()).getTimezoneOffset() * 60000;
     var today = (new Date(Date.now() - tzoffset)).toISOString().slice(0, 10);
     $("#depdate").val(today);
+    findterm($("#pbid").val(), $("#depdate").val())
+
+    function findterm(pbid, depdate) {
+        if (pbid != null) {
+            var data2 = new FormData();
+            data2.append("pbid", pbid);
+            data2.append("strdepdate", depdate);
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("CheckTerm", "Deposits")",
+                data: data2,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    $('#errmsg').text(" ");
+                    if (res.result == "no") {
+                        $("#btnSave").attr("title", "Disabled");
+                        $("#btnSave").attr("class", "btn btn-actiondisable");
+                        $("#btnSave").prop("disabled", "disabled");
+                        $("#acronym").prop("disabled", "disabled");
+                        $("#amount").prop("disabled", "disabled");
+                        $('#errmsg').text("Chưa đến kỳ hạn, không thể gửi thêm !");
+                    }
+                    else {
+                        $("#btnSave").attr("title", "Create");
+                        $("#btnSave").attr("class", "btn btn-input");
+                        $("#btnSave").prop("disabled", false);
+                        $("#acronym").prop("disabled", false);
+                        $("#amount").prop("disabled", false);
+                    }
+                },
+                error: function (res) {
+                    console.log(JSON.stringify(res));
+                    alert('error');
+                }
+            });
+        }
+    };
+
     $(document).ready(function () {
         //debugger;
+
+        $('#pbid').on('change', '', function (e) {
+            pbid = this.value;
+            findterm(pbid, $("#depdate").val());
+        });
+        $('#depdate').on('change', '', function (e) {
+            depdate = this.value;
+            findterm($("#pbid").val(), depdate);
+        });
+
         $("#btnSave").click(function () {
             //debugger;
             var formData = new FormData();

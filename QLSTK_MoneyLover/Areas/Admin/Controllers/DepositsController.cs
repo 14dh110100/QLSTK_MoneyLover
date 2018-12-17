@@ -182,5 +182,31 @@ namespace QLSTK_MoneyLover.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public JsonResult CheckTerm(string pbid, string strdepdate)
+        {
+            int a = 0;
+            string result = "";
+            DateTime depdate = new DateTime(2000, 01, 01);
+            if (!String.IsNullOrEmpty(pbid))
+            {
+                a = int.Parse(pbid);
+                PassBook passBook = db.PassBooks.Find(a);
+                if (!String.IsNullOrEmpty(strdepdate))
+                {
+                    depdate = DateTime.Parse(strdepdate);
+                }
+                int checkDays = (depdate - passBook.OpenDate).Days;
+                if (checkDays == 0 || checkDays == passBook.Term.MinDate)
+                {
+                    result = "yes";
+                }
+                else
+                {
+                    result = "no";
+                }
+            }
+            return Json(new { result }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
