@@ -50,18 +50,113 @@
 
         <div class="form-group">
             <div class="col-md-12" style="margin-top: 1rem;">
-                <center><input type="button" id="btnSave" value="Create" class="btn btn-input" /></center>
+                <center>
+                    <p style="color: #c82333;" id="errmsg"></p>
+                    <input type="button" id="btnSave" value="Create" class="btn btn-input" />
+                </center>
             </div>
         </div>
     </div>
 }
 
+<div class="modal fade" id="actionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titleModal" />
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span style="float: right" aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="body-content">
+                    <dl class="dl-horizontal">
+                        <dt style="width: 50%">
+                            Lãi suất :
+                        </dt>
+                        <dd>
+                            <p id="interest"></p>
+                        </dd>
+                        <dt style="width: 50%">
+                            Lãi suất không kỳ hạn :
+                        </dt>
+                        <dd>
+                            <p id="interestKKH"></p>
+                        </dd>
+                    </dl>
+                </div>
+                <center><input type="button" onclick="window.location.reload(true);" id="" value="OK" class="btn btn-input" /></center>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     var tzoffset = (new Date()).getTimezoneOffset() * 60000;
     var today = (new Date(Date.now() - tzoffset)).toISOString().slice(0, 10);
     $("#witdate").val(today);
+
+    findterm($("#pbid").val(), $("#witdate").val())
+
+    function findterm(pbid, witdate) {
+        if (pbid != null) {
+            var data2 = new FormData();
+            data2.append("pbid", pbid);
+            data2.append("strwitdate", witdate);
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("CheckTerm", "Withdraws")",
+                data: data2,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    $('#erramount').text("Số dư hiện tại: " + res.balance);
+                    $('#errmsg').text(" ");
+                    $("#amount").val(" ");
+                    if (res.result == "no") {
+                        $("#btnSave").attr("title", "Disabled");
+                        $("#btnSave").attr("class", "btn btn-actiondisable");
+                        $("#btnSave").prop("disabled", "disabled");
+                        $("#acronym").prop("disabled", "disabled");
+                        $("#amount").prop("disabled", "disabled");
+                        $('#errmsg').text("Chưa đến kỳ hạn, không thể rút tiền !");
+                    }
+                    else {
+                        $("#btnSave").attr("title", "Create");
+                        $("#btnSave").attr("class", "btn btn-input");
+                        $("#btnSave").prop("disabled", false);
+                        $("#acronym").prop("disabled", false);
+                        $("#amount").prop("disabled", false);
+                        if (res.acronym == "KKH") {
+                            $("#amount").prop("disabled", "disabled");
+                            $("#amount").val(res.balance);
+                        }
+                    }
+                },
+                error: function (res) {
+                    console.log(JSON.stringify(res));
+                    alert('error');
+                }
+            });
+        }
+    };
+
     $(document).ready(function () {
         //debugger;
+
+        $('#pbid').on('change', '', function (e) {
+            pbid = this.value;
+            findterm(pbid, $("#witdate").val());
+        });
+        $('#witdate').on('change', '', function (e) {
+            witdate = this.value;
+            findterm($("#pbid").val(), witdate);
+        });
+
         $("#btnSave").click(function () {
             //debugger;
             var formData = new FormData();
@@ -98,10 +193,16 @@
                         $('#erramount').text(res.msgamount);
                     }
                     if (res.msg == "completed") {
-                        $("#largeModal").modal("hide");
+                        //$("#largeModal").modal("hide");
                         alert('Thêm thành công !');
                         //window.location.reload(true);
-                        window.location.href = ("@Url.Action("Details", "Withdraws")/" + res.witid)
+                        //window.location.href = ("@Url.Action("Details", "Withdraws")/" + res.witid)
+                        $("#titleModal").empty();
+                        var txt = "Result";
+                        $("#titleModal").append(txt);
+                        $('#interest').text(res.interest);
+                        $('#interestKKH').text(res.interestKKH);
+                        $("#actionModal").modal("show");
                     }
                 },
                 error: function (res) {

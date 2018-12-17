@@ -40,7 +40,7 @@ namespace QLSTK_MoneyLover.Areas.Admin.Controllers
         // GET: Admin/Deposits/Create
         public ActionResult Create()
         {
-            var pblist = db.PassBooks.Where(n => n.Status != 0);
+            var pblist = db.PassBooks.Where(n => n.Status == 1);
             ViewBag.PassBookId = new SelectList(pblist, "Id", "Acronym");
             return View();
         }

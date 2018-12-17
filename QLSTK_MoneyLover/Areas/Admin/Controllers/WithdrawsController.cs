@@ -40,7 +40,7 @@ namespace QLSTK_MoneyLover.Areas.Admin.Controllers
         // GET: Admin/Withdraws/Create
         public ActionResult Create()
         {
-            var pblist = db.PassBooks.Where(n => n.Status != 0);
+            var pblist = db.PassBooks.Where(n => n.Status == 1);
             ViewBag.PassBookId = new SelectList(pblist, "Id", "Acronym");
             return View();
         }
@@ -78,10 +78,10 @@ namespace QLSTK_MoneyLover.Areas.Admin.Controllers
             {
                 msgamount = "Số tiền rút không thể nhỏ hơn 0 !";
             }
-            else if (withdraw.Amount % 50000 > 0)
-            {
-                msgamount = "Đơn vị tiền nhỏ nhất là 50.000 !";
-            }
+            //else if (withdraw.Amount % 50000 > 0)
+            //{
+            //    msgamount = "Đơn vị tiền nhỏ nhất là 50.000 !";
+            //}
             else if (withdraw.PassBookId != 0)
             {
                 PassBook passBook = db.PassBooks.Find(withdraw.PassBookId);
@@ -114,10 +114,17 @@ namespace QLSTK_MoneyLover.Areas.Admin.Controllers
                 db.Withdraws.Add(withdraw);
                 PassBook passBook = db.PassBooks.Find(withdraw.PassBookId);
                 passBook.Balance -= withdraw.Amount;
+                if (passBook.Balance == 0)
+                {
+                    passBook.Status = 2;
+                }
                 db.SaveChanges();
+                var res = Calculate(withdraw.PassBookId, withdraw.WithdrawDate, withdraw.Amount);
+                decimal interest = (decimal)res.interest;
+                decimal interestKKH = (decimal)res.interestKKH;
                 int witid = 0;
                 witid = withdraw.Id;
-                return Json(new { witid, msg }, JsonRequestBehavior.AllowGet);
+                return Json(new { witid, msg, interest, interestKKH }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { msgacronym, msgpbid, msgwitdate, msgamount }, JsonRequestBehavior.AllowGet);
         }
@@ -189,6 +196,94 @@ namespace QLSTK_MoneyLover.Areas.Admin.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public JsonResult CheckTerm(string pbid, string strwitdate)
+        {
+            int a = 0;
+            string result = "", acronym = "";
+            decimal balance = 0;
+            DateTime depdate = new DateTime(2000, 01, 01);
+            if (!String.IsNullOrEmpty(pbid))
+            {
+                a = int.Parse(pbid);
+                PassBook passBook = db.PassBooks.Find(a);
+                balance = passBook.Balance;
+                if (!String.IsNullOrEmpty(strwitdate))
+                {
+                    depdate = DateTime.Parse(strwitdate);
+                }
+                int checkDays = (depdate - passBook.OpenDate).Days;
+                if (checkDays >= passBook.Term.MinDate)
+                {
+                    result = "yes";
+                    if (passBook.Term.Acronym == "KKH")
+                    {
+                        acronym = "KKH";
+                    }
+                }
+                else
+                {
+                    result = "no";
+                }
+            }
+            return Json(new { result, acronym, balance }, JsonRequestBehavior.AllowGet);
+        }
+
+        private dynamic Calculate(int id, DateTime witdate, decimal amount)
+        {
+            PassBook passBook = db.PassBooks.SingleOrDefault(n => n.Id == id);
+            double rate = passBook.InterestRate, demandrate = passBook.DemandInterestRate;
+            double interest = 0, interestKKH = 0;
+            int checkDays = (witdate - passBook.ChangeDate).Days;
+            if (checkDays < passBook.Term.MinDate)
+            {
+                //Tính lãi suất không kỳ hạn
+                interestKKH = ((double)amount * (demandrate / 100) / 360) * checkDays;
+            }
+            else if (checkDays == passBook.Term.MinDate)
+            {
+                //Tính lãi suất đúng kỳ hạn
+                interest = ((double)amount * (rate / 100) / 360) * passBook.Term.MinDate;
+            }
+            else
+            {
+                //Tính lãi suất đúng kỳ hạn + lãi suất không kỳ hạn
+                if (passBook.Term.Acronym == "KKH")
+                {
+                    passBook.Term.MinDate = 360;
+                }
+                int checkTerms = checkDays / passBook.Term.MinDate;
+                double currentBal = (double)amount;
+                DateTime changeDate = passBook.ChangeDate;
+                //Vòng lặp tính lãi suất mỗi lần đúng kỳ hạn
+                for (int i = 0; i < checkTerms; i++)
+                {
+                    interest = (currentBal * (rate / 100) / 360) * passBook.Term.MinDate;
+                    changeDate = changeDate.AddDays(passBook.Term.MinDate);
+                    
+                    currentBal += interest;
+                }
+                passBook.ChangeDate = changeDate;
+                passBook.Balance = decimal.Parse(currentBal.ToString("F"));
+                passBook.TermEnd = 1;
+                interestKKH = (currentBal * (demandrate / 100) / 360) * (checkDays - (passBook.Term.MinDate * checkTerms));
+            }
+            interest = double.Parse(interest.ToString("F"));
+            interestKKH = double.Parse(interestKKH.ToString("F"));
+            var res = new
+            {
+                interest,
+                interestKKH
+            };
+            return res;
+        }
+
+        public JsonResult ShowResult(string interest, string interestKKH)
+        {
+            string a = interest;
+            string b = interestKKH;
+            return Json(new { a, b }, JsonRequestBehavior.AllowGet);
         }
     }
 }
