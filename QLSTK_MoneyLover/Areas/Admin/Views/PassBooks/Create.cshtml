@@ -2,131 +2,201 @@
 
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutBlankAd.cshtml";
 }
 
-<h2>Create</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>PassBook</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.BankId, "BankId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("BankId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.BankId, "", new { @class = "text-danger" })
+
+        <div class="row">
+            <div class="col-md-6 form-group">
+                @Html.LabelFor(model => model.Acronym, "Mã số :", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.Acronym, new { htmlAttributes = new { @class = "form-control acronym", maxstr = "40", id = "acronym" } })
+                    @Html.ValidationMessageFor(model => model.Acronym, "", new { @class = "text-danger", id = "erracronym" })
+                </div>
+            </div>
+
+            <div class="col-md-6 form-group">
+                @Html.LabelFor(model => model.TermId, "Loại tiết kiệm :", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.DropDownList("TermId", null, htmlAttributes: new { @class = "form-control", id = "termid" })
+                    @Html.ValidationMessageFor(model => model.TermId, "", new { @class = "text-danger", id = "errtermid" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 form-group">
+                @Html.LabelFor(model => model.CustomerId, "Khách hàng :", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @*<input list="custlist" name="custid" class = "form-control" id = "custid" maxstr = "10">
+                <datalist id="custlist">
+                  @foreach (var item in ViewBag.CustomerId)
+                  {
+                      <option value="@item.Text" />
+                  }
+                </datalist>*@
+                    @Html.DropDownList("CustomerId", null, htmlAttributes: new { @class = "form-control", id = "custid" })
+                    @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger", id = "errcustid" })
+                </div>
+            </div>
+
+            <div class="col-md-6 form-group">
+                @Html.Label("IdCard", "CMND :", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.Editor("IdCard", null, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", id = "idcard" } })
+                    @Html.ValidationMessage("IdCard", "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 form-group">
+                @Html.Label("Adress", "Địa chỉ :", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.Editor("Adress", null, new { htmlAttributes = new { @class = "form-control", disabled = "disabled", id = "adress" } })
+                    @Html.ValidationMessage("Adress", "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-6 form-group">
+                @Html.LabelFor(model => model.OpenDate, "Ngày mở sổ :", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.OpenDate, new { htmlAttributes = new { @class = "form-control", type = "date", id = "opendate" } })
+                    @Html.ValidationMessageFor(model => model.OpenDate, "", new { @class = "text-danger", id = "erropendate" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 form-group">
+                @Html.LabelFor(model => model.Principal, "Số tiền gởi :", htmlAttributes: new { @class = "control-label col-md-12" })
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.Principal, new { htmlAttributes = new { @class = "form-control moneyinput", maxstr = "12", id = "principal" } })
+                    @Html.ValidationMessageFor(model => model.Principal, "", new { @class = "text-danger", id = "errprincipal" })
+                </div>
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TermId, "TermId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("TermId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TermId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CustomerId, "CustomerId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("CustomerId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Acronym, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Acronym, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Acronym, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Balance, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Balance, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Balance, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OpenDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OpenDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OpenDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.InterestPayment, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.InterestPayment, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.InterestPayment, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.TermEnd, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TermEnd, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TermEnd, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Principal, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Principal, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Principal, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ChangeDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ChangeDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ChangeDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.InterestRate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.InterestRate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.InterestRate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DemandInterestRate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DemandInterestRate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DemandInterestRate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="col-md-12" style="margin-top: 1rem;">
+                <center><input type="button" id="btnSave" value="Create" class="btn btn-input" /></center>
+                @*<input type="submit" value="Create" class="btn btn-default" />*@
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
+    <script>
+    //debugger;
+    findcust($("#custid").val());
+    var tzoffset = (new Date()).getTimezoneOffset() * 60000;
+    var today = (new Date(Date.now() - tzoffset)).toISOString().slice(0, 10);
+    $("#opendate").val(today);
+    function findcust(custid) {
+        if (custid != null) {
+            var data2 = new FormData();
+            data2.append("custid", custid);
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("CheckCustomer", "PassBooks")",
+                data: data2,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    //$('#errir').text(" ");
+                    //$('#errdemandir').text(" ");
+                    var adress = res.adress;
+                    var idcard = res.idcard;
+                    //if (res.rate == "0") {
+                    //    $('#errir').text("Not found !");
+                    //}
+                    //if (res.demandrate == "0") {
+                    //    $('#errdemandir').text("Not found !");
+                    //}
+                    $('#adress').val(adress);
+                    $('#idcard').val(idcard);
+                    //document.getElementById("ir").value = ir;
+                    //document.getElementById("demandir").value = demandir;
+                },
+                error: function (res) {
+                    console.log(JSON.stringify(res));
+                    alert('error');
+                }
+            });
+        }
+    };
+
+    $(document).ready(function () {
+        //debugger;
+        $('#custid').on('change', '', function (e) {
+            custid = this.value;
+            findcust(custid);
+        });
+
+        $("#btnSave").click(function () {
+            //debugger;
+            var formData = new FormData();
+
+            formData.append("CustomerId", $("#custid").val());
+            formData.append("TermId", $("#termid").val());
+            formData.append("Acronym", $("#acronym").val());
+            formData.append("Principal", $("#principal").val());
+            formData.append("OpenDate", $("#opendate").val());
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Create","PassBooks")",
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    //debugger;
+                    console.log(JSON.stringify(res));
+                    $('#errcustid').text(" ");
+                    $('#errtermid').text(" ");
+                    $('#erracronym').text(" ");
+                    $('#errprincipal').text(" ");
+                    $('#erropendate').text(" ");
+                    if (res.msgbankid != null) {
+                        $('#errcustid').text(res.msgcustid);
+                    }
+                    if (res.msgtermid != null) {
+                        $('#errtermid').text(res.msgtermid);
+                    }
+                    if (res.msgacronym != null) {
+                        $('#erracronym').text(res.msgacronym);
+                    }
+                    if (res.msgprincipal != null) {
+                        $('#errprincipal').text(res.msgprincipal);
+                    }
+                    if (res.msgopendate != null) {
+                        $('#erropendate').text(res.msgopendate);
+                    }
+                    if (res.msg == "completed") {
+                        $("#largeModal").modal("hide");
+                        alert('Thêm thành công !');
+                        //window.location.reload(true);
+                        window.location.href = ("@Url.Action("Details", "PassBooks")/" + res.pbid)
+                    }
+                },
+                error: function (res) {
+                    //debugger;
+                    console.log(JSON.stringify(res));
+                    $("#largeModal").modal("hide");
+                    alert('error');
+                    //window.location.href = ("@Url.Action("Details","Sanhs")/" + data.MaSanh);
+                }
+            })
+        })
+    })
+    </script>

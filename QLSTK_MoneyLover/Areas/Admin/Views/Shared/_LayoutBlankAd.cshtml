@@ -1,0 +1,70 @@
+﻿@*@{
+    if (Session["userid"] == null && ViewBag.Page != "Login/Register")
+    {
+        Response.Redirect("~/Home/Login");
+    }
+}*@
+
+@RenderBody()
+
+<script>
+    String.prototype.capitalize = function () {
+        return this.replace(/(?:^|\s)\S/g, function (a) { return a.toUpperCase(); });
+    };
+    $("input[maxstr]").each(function (index, element) {
+        var length = parseInt($(this).attr("maxstr"));
+        $(this).prop("maxlength", length);
+    });
+    $(".moneyinput").on('input', '', function () {
+        //debugger;
+        var str = $(this).val();
+        str = str.replace(/[^0-9]/, '');
+        this.value = str;
+        if (str.length > 0) {
+            $('#errprincipal').text(" ");
+        };
+    });
+    $(".acronym").on('input', '', function () {
+        //debugger;
+        var str = $(this).val();
+        str = str.replace(/\W/, '');
+        this.value = str;
+    });
+    $(".irinput").on('input', '', function () {
+        //debugger;
+        var str = $(this).val();
+        str = str.replace(/[^0-9.]/, '');
+        str = str.replace(/[.]+/, '.');
+        if (/^[0-9]{0,2}[.]{0,1}[0-9]{0,3}$/.test(str) == false) {
+            $('#errir').text("Vui lòng nhập đúng kiểu dữ liệu: xx.xxx");
+        }
+        else {
+            $('#errir').text(" ");
+        };
+        this.value = str;
+    });
+    $(".dirinput").on('input', '', function () {
+        //debugger;
+        var str = $(this).val();
+        str = str.replace(/[^0-9.]/, '');
+        str = str.replace(/[.]+/, '.');
+        if (/^[0-9]{0,2}[.]{0,1}[0-9]{0,3}$/.test(str) == false) {
+            $('#errdemandir').text("Vui lòng nhập đúng kiểu dữ liệu: xx.xxx");
+        }
+        else {
+            $('#errdemandir').text(" ");
+        };
+        this.value = str;
+    });
+    $("input[type=date]").each(function (index, element) {
+        $(this).prop("min", "2000-01-01");
+        $(this).prop("max", "2030-12-30");
+    });
+    $(".nameinput").on('input', '', function () {
+        var str = $(this).val();
+        var regex = /[^a-zA-Z0-9 ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]/u;
+        str = str.replace(regex, '');
+        str = str.capitalize();
+        this.value = str.replace(/  +/g, ' ');
+    });
+</script>

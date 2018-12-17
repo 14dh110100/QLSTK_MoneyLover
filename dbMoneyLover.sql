@@ -138,6 +138,7 @@ SET IDENTITY_INSERT dbo.Bank ON
 INSERT INTO dbo.Bank (Id, Acronym, Name, Status) VALUES (1, N'ACB', N'Ngân hàng Á Châu', 1)
 INSERT INTO dbo.Bank (Id, Acronym, Name, Status) VALUES (2, N'VCB', N'Vietcombank', 1)
 INSERT INTO dbo.Bank (Id, Acronym, Name, Status) VALUES (3, N'BIDV', N'BIDV Bank', 1)
+INSERT INTO dbo.Bank (Id, Acronym, Name, Status) VALUES (4, N'CNPM', N'Công nghệ phần mềm', 2)
 SET IDENTITY_INSERT dbo.Bank OFF
 
 SET IDENTITY_INSERT dbo.Term ON
@@ -146,6 +147,9 @@ INSERT INTO dbo.Term (Id, Acronym, Name, MinDate, MinPayIn, Status) VALUES (2, N
 INSERT INTO dbo.Term (Id, Acronym, Name, MinDate, MinPayIn, Status) VALUES (3, N'3T', N'3 Tháng', 90, CAST(1000000 AS Decimal(18, 0)), 1)
 INSERT INTO dbo.Term (Id, Acronym, Name, MinDate, MinPayIn, Status) VALUES (4, N'6T', N'6 Tháng', 180, CAST(1000000 AS Decimal(18, 0)), 1)
 INSERT INTO dbo.Term (Id, Acronym, Name, MinDate, MinPayIn, Status) VALUES (5, N'12T', N'12 Tháng', 360, CAST(1000000 AS Decimal(18, 0)), 1)
+INSERT INTO dbo.Term (Id, Acronym, Name, MinDate, MinPayIn, Status) VALUES (6, N'KKH', N'Không kỳ hạn', 15, CAST(1000000 AS Decimal(18, 0)), 2)
+INSERT INTO dbo.Term (Id, Acronym, Name, MinDate, MinPayIn, Status) VALUES (7, N'3T', N'3 Tháng', 90, CAST(1000000 AS Decimal(18, 0)), 2)
+INSERT INTO dbo.Term (Id, Acronym, Name, MinDate, MinPayIn, Status) VALUES (8, N'6T', N'6 Tháng', 180, CAST(1000000 AS Decimal(18, 0)), 2)
 SET IDENTITY_INSERT dbo.Term OFF
 
 SET IDENTITY_INSERT dbo.InterestRate ON
@@ -164,6 +168,9 @@ INSERT INTO dbo.InterestRate (Id, BankId, TermId, Acronym, Rate, Status) VALUES 
 INSERT INTO dbo.InterestRate (Id, BankId, TermId, Acronym, Rate, Status) VALUES (13, 3, 3, N'BIDV_3T', 4.8, 1)
 INSERT INTO dbo.InterestRate (Id, BankId, TermId, Acronym, Rate, Status) VALUES (14, 3, 4, N'BIDV_6T', 5.3, 1)
 INSERT INTO dbo.InterestRate (Id, BankId, TermId, Acronym, Rate, Status) VALUES (15, 3, 5, N'BIDV_12T', 6.9, 1)
+INSERT INTO dbo.InterestRate (Id, BankId, TermId, Acronym, Rate, Status) VALUES (16, 4, 6, N'CNPM_KKH', 0.15, 2)
+INSERT INTO dbo.InterestRate (Id, BankId, TermId, Acronym, Rate, Status) VALUES (17, 4, 7, N'CNPM_3T', 0.5, 2)
+INSERT INTO dbo.InterestRate (Id, BankId, TermId, Acronym, Rate, Status) VALUES (18, 4, 8, N'CNPM_6T', 0.55, 2)
 SET IDENTITY_INSERT dbo.InterestRate OFF
 
 SET IDENTITY_INSERT dbo.PassBook ON

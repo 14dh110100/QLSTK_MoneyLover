@@ -17,7 +17,8 @@ namespace QLSTK_MoneyLover.Areas.Admin.Controllers
         // GET: Admin/Terms
         public ActionResult Index()
         {
-            return View(db.Terms.ToList());
+            var termlist = db.Terms.Where(n => n.Status == 2);
+            return View(termlist.ToList());
         }
 
         // GET: Admin/Terms/Details/5
@@ -110,7 +111,8 @@ namespace QLSTK_MoneyLover.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Term term = db.Terms.Find(id);
-            db.Terms.Remove(term);
+            term.Status = 3;
+            db.Entry(term).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

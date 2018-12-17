@@ -10,7 +10,7 @@
     string pn = "Index";
     int i = 0;
 }
-@Html.Action("Breadcome", "LayoutAdmin", new { pagename = pn })
+@Html.Action("Breadcome", "LayoutAdmin", new { pagename =  pn })
 <!-- Breadcome End-->
 <!-- Static Table Start -->
 <div class="data-table-area mg-b-15">
@@ -20,7 +20,7 @@
                 <div class="sparkline13-list shadow-reset">
                     <div class="sparkline13-hd">
                         <div class="main-sparkline13-hd">
-                            <h1>Projects <span class="table-project-n">Data</span> Table</h1>
+                            <h1>Passbooks List <span class="table-project-n"><a class="btn btn-action" style="margin-left: 10px;" id="create" title="Thêm sổ tiết kiệm" data-toggle="modal" data-target="#largeModal">+</a></span></h1>
                             <div class="sparkline13-outline-icon">
                                 <span class="sparkline13-collapse-link"><i class="fa fa-chevron-up"></i></span>
                                 <span><i class="fa fa-wrench"></i></span>
@@ -71,9 +71,9 @@
                                                 @Html.DisplayFor(modelItem => item.Balance)
                                             </td>
                                             <td>
-                                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                                                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                                                <a href="@Url.Action("Details", new { id = item.Id })" mycheck="@item.Status" action="details" data-id="@item.Id" class="btn btn-action" style="margin: 0" data-toggle="modal" title="Details"><i class="glyphicon glyphicon-info-sign"></i></a>
+                                                <a href="@Url.Action("Edit", new { id = item.Id })" mycheck="@item.Status" action="edit" data-id="@item.Id" class="btn btn-action" style="margin: 0" data-toggle="modal" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
+                                                <a href="@Url.Action("Delete", new { id = item.Id })" mycheck="@item.Status" action="delete" data-id="@item.Id" class="btn btn-action" style="margin: 0" data-toggle="modal" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
                                             </td>
                                         </tr>
                                     }

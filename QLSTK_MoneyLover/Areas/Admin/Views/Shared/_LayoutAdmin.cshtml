@@ -81,6 +81,28 @@
     <!-- Footer Start-->
     @Html.Action("Footer", "LayoutAdmin")
     <!-- Footer End-->
+
+    <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="titleModal-lg" />
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span style="float: right" aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="body-content-lg">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- jquery
         ============================================ -->
     <script src="~/Areas/Admin/Templates/adminpro/js/vendor/jquery-1.11.3.min.js"></script>
@@ -129,5 +151,112 @@
     <!-- main JS
         ============================================ -->
     <script src="~/Areas/Admin/Templates/adminpro/js/main.js"></script>
+
+    <!-- Custom javascript -->
+    <script>
+        $("a[mycheck]").each(function () {
+            //debugger;
+            var status = parseInt($(this).attr("mycheck"));
+            if (status != 1) {
+                $(this).attr("href", "");
+                $(this).attr("title", "Disabled");
+                $(this).attr("class", "btn btn-actiondisable");
+            };
+        });
+        $("a[termcheck]").each(function () {
+            //debugger;
+            var status = parseInt($(this).attr("termcheck"));
+            if (status != 2) {
+                $(this).attr("href", "");
+                $(this).attr("title", "Disabled");
+                $(this).attr("class", "btn btn-actiondisable");
+            };
+        });
+        String.prototype.capitalize = function () {
+            return this.replace(/(?:^|\s)\S/g, function (a) { return a.toUpperCase(); });
+        };
+        $(".usernameinput").on('input', '', function () {
+            var str = $(this).val();
+            str = str.replace(/[^A-Za-z0-9_.\u0040]/, '');
+            this.value = str;
+        });
+        $(".pwinput").on('input', '', function () {
+            this.value = this.value.replace(/ +/g, '');
+        });
+        $(".nameinput").on('input', '', function () {
+            var str = $(this).val();
+            var regex = /[^a-zA-Z ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]/u;
+            str = str.replace(regex, '');
+            str = str.capitalize();
+            this.value = str.replace(/  +/g, ' ');
+        });
+        $(".toggle-password").click(function () {
+            $(this).toggleClass("fa-eye fa-eye-slash");
+            var input = $($(this).attr("toggle"));
+            if (input.attr("type") == "password") {
+                input.attr("type", "text");
+            } else {
+                input.attr("type", "password");
+            }
+        });
+
+        $("#create").click(function () {
+            $("#body-content-lg").empty();
+            $("#titleModal-lg").empty();
+            var txt = "Create";
+            $("#titleModal-lg").append(txt);
+                $("#body-content-lg").load("@Url.Action("Create")");
+
+        })
+        $("[action='edit']").click(function () {
+            $("#body-content-lg").empty();
+            $("#titleModal-lg").empty();
+            var txt = "Edit";
+            $("#titleModal-lg").append(txt);
+                $("#body-content-lg").load("@Url.Action("Edit")/" + $(this).data("id"));
+
+        })
+        $("[action='details']").click(function () {
+            $("#body-content-lg").empty();
+            $("#titleModal-lg").empty();
+            var txt = "Details";
+            $("#titleModal-lg").append(txt);
+                $("#body-content-lg").load("@Url.Action("Details")/" + $(this).data("id"));
+
+        })
+        $("[action='delete']").click(function () {
+            $("#body-content-lg").empty();
+            $("#titleModal-lg").empty();
+            var txt = "Delete";
+            $("#titleModal-lg").append(txt);
+                $("#body-content-lg").load("@Url.Action("Delete")/" + $(this).data("id"));
+
+        })
+        $("[action='deposit']").click(function () {
+            $("#body-content").empty();
+            $("#titleModal").empty();
+            var txt = "Gửi thêm";
+            $("#titleModal").append(txt);
+            $("#body-content").load("@Url.Action("Deposit")/" + $(this).data("id"));
+
+        })
+        $("[action='confirmwithdraw']").click(function () {
+            $("#body-content").empty();
+            $("#titleModal").empty();
+            var txt = "Xác nhận rút một phần";
+            $("#titleModal").append(txt);
+            $("#body-content").load("@Url.Action("ConfirmWithdraw")/" + $(this).data("id"));
+
+        })
+        $("[action='close']").click(function () {
+            $("#body-content").empty();
+            $("#titleModal").empty();
+            var txt = "Tất toán";
+            $("#titleModal").append(txt);
+            $("#body-content").load("@Url.Action("Close")/" + $(this).data("id"));
+
+        })
+    </script>
+
 </body>
 </html>
