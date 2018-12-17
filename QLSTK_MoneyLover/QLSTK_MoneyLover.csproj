@@ -169,18 +169,15 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
-    <Compile Include="Areas\Admin\Controllers\BanksController.cs" />
     <Compile Include="Areas\Admin\Controllers\CustomersController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\DepositsController.cs" />
-    <Compile Include="Areas\Admin\Controllers\InterestRatesController.cs" />
     <Compile Include="Areas\Admin\Controllers\LayoutAdminController.cs" />
-    <Compile Include="Areas\Admin\Controllers\PassbookDetailsController.cs" />
     <Compile Include="Areas\Admin\Controllers\PassBooksController.cs" />
-    <Compile Include="Areas\Admin\Controllers\RoleAdminsController.cs" />
     <Compile Include="Areas\Admin\Controllers\TermsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserAdminsController.cs" />
     <Compile Include="Areas\Admin\Controllers\WithdrawsController.cs" />
+    <Compile Include="Areas\Admin\Models\Security\MD5EncryptAdmin.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LayoutController.cs" />
     <Compile Include="Controllers\PassBookController.cs" />
@@ -237,6 +234,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Models\Security\md5.min.js" />
     <Content Include="Areas\Admin\Templates\adminpro\css\accordions.css" />
     <Content Include="Areas\Admin\Templates\adminpro\css\adminpro-custon-icon.css" />
     <Content Include="Areas\Admin\Templates\adminpro\css\alerts.css" />
@@ -488,26 +486,11 @@
     <Content Include="Models\dbMoneyLover.edmx.diagram">
       <DependentUpon>dbMoneyLover.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Admin\Views\Banks\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Banks\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Banks\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Banks\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Banks\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Customers\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Customers\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Customers\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Customers\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Customers\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\InterestRates\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\InterestRates\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\InterestRates\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\InterestRates\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\InterestRates\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\RoleAdmins\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\RoleAdmins\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\RoleAdmins\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\RoleAdmins\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\RoleAdmins\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Terms\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Terms\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Terms\Details.cshtml" />
@@ -563,11 +546,6 @@
     <Content Include="Areas\Admin\Views\PassBooks\Details.cshtml" />
     <Content Include="Areas\Admin\Views\PassBooks\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\PassBooks\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\PassbookDetails\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\PassbookDetails\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\PassbookDetails\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\PassbookDetails\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\PassbookDetails\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutBlankAd.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -813,7 +791,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

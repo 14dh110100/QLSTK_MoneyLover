@@ -17,7 +17,8 @@ namespace QLSTK_MoneyLover.Areas.Admin.Controllers
         // GET: Admin/PassBooks
         public ActionResult Index()
         {
-            var passBooks = db.PassBooks.Include(p => p.Bank).Include(p => p.Customer).Include(p => p.Term);
+            //var passBooks = db.PassBooks.Include(p => p.Bank).Include(p => p.Customer).Include(p => p.Term);
+            var passBooks = db.PassBooks.Where(n => n.Status != 0);
             return View(passBooks.ToList());
         }
 
@@ -39,8 +40,9 @@ namespace QLSTK_MoneyLover.Areas.Admin.Controllers
         // GET: Admin/PassBooks/Create
         public ActionResult Create()
         {
+            var custlist = db.Customers.Where(n => n.Status != 0);
             var termlist = db.Terms.Where(n => n.Status == 2);
-            ViewBag.CustomerId = new SelectList(db.Customers, "Id", "Acronym");
+            ViewBag.CustomerId = new SelectList(custlist, "Id", "Acronym");
             ViewBag.TermId = new SelectList(termlist, "Id", "Acronym");
             return View();
         }
@@ -170,7 +172,8 @@ namespace QLSTK_MoneyLover.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             PassBook passBook = db.PassBooks.Find(id);
-            db.PassBooks.Remove(passBook);
+            passBook.Status = 0;
+            db.Entry(passBook).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

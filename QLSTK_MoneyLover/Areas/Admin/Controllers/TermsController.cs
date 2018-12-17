@@ -46,17 +46,82 @@ namespace QLSTK_MoneyLover.Areas.Admin.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Acronym,Name,MinDate,MinPayIn,Status")] Term term)
+        public ActionResult Create([Bind(Include = "Id,Acronym,Name,MinDate,MinPayIn,Status")] Term term, string ir, string mindate)
         {
-            if (ModelState.IsValid)
+            string msg = null, msgacronym = null, msgname = null, msgmindate = null, msgminpayin = null, msgir = null;
+
+            if (String.IsNullOrEmpty(term.Name))
             {
-                db.Terms.Add(term);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                msgname = "Nhập tên loại kỳ hạn !";
+            }
+            if (String.IsNullOrEmpty(term.Acronym))
+            {
+                msgacronym = "Nhập mã loại kỳ hạn !";
+            }
+            else
+            {
+                int termcount = db.Terms.Where(n => n.Acronym == term.Acronym && n.Status == 2).Count();
+                if (termcount > 0)
+                {
+                    msgacronym = "Loại kỳ hạn này đã tồn tại !";
+                }
+            }
+            if (String.IsNullOrEmpty(mindate))
+            {
+                msgmindate = "Nhập số ngày gửi tối thiểu !";
+            }
+            else if (term.MinDate < 0)
+            {
+                msgmindate = "Số ngày gửi tối thiểu không thể nhỏ hơn 0 !";
+            }
+            else if (term.MinDate > 3650)
+            {
+                msgmindate = "Số ngày gửi tối thiểu không thể lớn hơn 3650 !";
+            }
+            if (term.MinPayIn == 0)
+            {
+                msgminpayin = "Nhập số tiền gửi tối thiểu !";
+            }
+            else if (term.MinPayIn < 0)
+            {
+                msgminpayin = "Số tiền gửi tối thiểu không thể nhỏ hơn 0 !";
+            }
+            else if (term.MinPayIn % 50000 > 0)
+            {
+                msgminpayin = "Đơn vị tiền nhỏ nhất là 50.000 !";
+            }
+            if (String.IsNullOrEmpty(ir))
+            {
+                msgir = "Nhập lãi suất !";
+            }
+            else if (Convert.ToDouble(ir) > 100)
+            {
+                msgir = "Lãi suất không thể lớn hơn 100 %";
+            }
+            else if (Convert.ToDouble(ir) <= 0)
+            {
+                msgir = "Lãi suất phải lớn hơn 0 %";
             }
 
-            return View(term);
+            if (msgacronym == null && msgname == null && msgmindate == null && msgminpayin == null && msgir == null)
+            {
+                msg = "completed";
+                term.Status = 2;
+                db.Terms.Add(term);
+                Bank bank = db.Banks.FirstOrDefault(n => n.Status == 2);
+                InterestRate interestRate = new InterestRate();
+                interestRate.BankId = bank.Id;
+                interestRate.TermId = term.Id;
+                interestRate.Acronym = bank.Acronym + "_" + term.Acronym;
+                interestRate.Rate = Convert.ToDouble(ir);
+                interestRate.Status = 2;
+                db.InterestRates.Add(interestRate);
+                db.SaveChanges();
+                int termid = 0;
+                termid = term.Id;
+                return Json(new { termid, msg }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { msgacronym, msgname, msgmindate, msgminpayin, msgir }, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Admin/Terms/Edit/5

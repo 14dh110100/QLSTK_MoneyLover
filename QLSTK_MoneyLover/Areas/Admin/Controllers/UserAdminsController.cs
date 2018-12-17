@@ -17,7 +17,8 @@ namespace QLSTK_MoneyLover.Areas.Admin.Controllers
         // GET: Admin/UserAdmins
         public ActionResult Index()
         {
-            var userAdmins = db.UserAdmins.Include(u => u.RoleAdmin);
+            //var userAdmins = db.UserAdmins.Include(u => u.RoleAdmin);
+            var userAdmins = db.UserAdmins.Where(n => n.Status != 0);
             return View(userAdmins.ToList());
         }
 
@@ -115,7 +116,8 @@ namespace QLSTK_MoneyLover.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             UserAdmin userAdmin = db.UserAdmins.Find(id);
-            db.UserAdmins.Remove(userAdmin);
+            userAdmin.Status = 0;
+            db.Entry(userAdmin).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -67,4 +67,10 @@
         str = str.capitalize();
         this.value = str.replace(/  +/g, ' ');
     });
+    $(".adressinput").on('input', '', function () {
+        var str = $(this).val();
+        var regex = /[^a-zA-Z0-9., ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]/u;
+        str = str.replace(regex, '');
+        this.value = str.replace(/  +/g, ' ');
+    });
 </script>

@@ -76,12 +76,13 @@
             formData.append("Acronym", $("#acronym").val());
             formData.append("Name", $("#name").val());
             formData.append("MinDate", $("#mindate").val());
+            formData.append("mindate", $("#mindate").val());
             formData.append("MinPayIn", $("#minpayin").val());
             formData.append("ir", $("#ir").val());
 
             $.ajax({
                 type: "POST",
-                url: "@Url.Action("Create","PassBooks")",
+                url: "@Url.Action("Create","Terms")",
                 data: formData,
                 dataType: 'json',
                 contentType: false,
