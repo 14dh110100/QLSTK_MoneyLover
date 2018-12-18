@@ -71,7 +71,7 @@
                                                 @Html.DisplayFor(modelItem => item.Balance)
                                             </td>
                                             <td>
-                                                <a href="@Url.Action("Details", new { id = item.Id })" mycheck="@item.Status" action="details" data-id="@item.Id" class="btn btn-action" style="margin: 0" data-toggle="modal" title="Details"><i class="glyphicon glyphicon-info-sign"></i></a>
+                                                <a href="@Url.Action("Details", new { id = item.Id })" action="details" data-id="@item.Id" class="btn btn-action" style="margin: 0" data-toggle="modal" title="Details"><i class="glyphicon glyphicon-info-sign"></i></a>
                                                 <a href="@Url.Action("Edit", new { id = item.Id })" mycheck="@item.Status" action="edit" data-id="@item.Id" class="btn btn-action" style="margin: 0" data-toggle="modal" title="Edit"><i class="glyphicon glyphicon-edit"></i></a>
                                                 <a href="@Url.Action("Delete", new { id = item.Id })" mycheck="@item.Status" action="delete" data-id="@item.Id" class="btn btn-action" style="margin: 0" data-toggle="modal" title="Delete"><i class="glyphicon glyphicon-trash"></i></a>
                                             </td>
