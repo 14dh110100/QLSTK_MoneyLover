@@ -82,7 +82,16 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @if(ViewBag.PbCount != 0)
+            {
+                <p style="color: #c82333;" id="">Khách hàng này đang có @ViewBag.PbCount sổ tiết kiệm. Không thể xóa !</p>
+                <input type="submit" value="Delete" class="btn btn-default" disabled="disabled" />
+            }
+            else
+            {
+                <input type="submit" value="Delete" class="btn btn-default" />
+            }
+             |
             @Html.ActionLink("Back to List", "Index")
         </div>
     }

@@ -163,6 +163,10 @@ namespace QLSTK_MoneyLover.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+            int depcount = db.Deposits.Where(n => n.PassBookId == passBook.Id && n.Status == 1).Count();
+            int witcount = db.Withdraws.Where(n => n.PassBookId == passBook.Id && n.Status == 1).Count();
+            ViewBag.DepCount = depcount;
+            ViewBag.WitCount = witcount;
             return View(passBook);
         }
 

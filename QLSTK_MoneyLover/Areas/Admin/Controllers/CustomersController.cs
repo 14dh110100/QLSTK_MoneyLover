@@ -148,6 +148,8 @@ namespace QLSTK_MoneyLover.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+            int pbcount = db.PassBooks.Where(n => n.CustomerId == customer.Id && n.Status != 0).Count();
+            ViewBag.PbCount = pbcount;
             return View(customer);
         }
 

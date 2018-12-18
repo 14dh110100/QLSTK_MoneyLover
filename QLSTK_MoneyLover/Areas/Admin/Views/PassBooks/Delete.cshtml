@@ -122,7 +122,16 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @if(ViewBag.DepCount != 0 || ViewBag.WitCount != 0)
+            {
+                <p style="color: #c82333;" id="">Sổ tiết kiệm này đang có @ViewBag.DepCount phiếu gởi và @ViewBag.WitCount phiếu rút. Không thể xóa !</p>
+                <input type="submit" value="Delete" class="btn btn-default" disabled="disabled" />
+            }
+            else
+            {
+                <input type="submit" value="Delete" class="btn btn-default" />
+            }
+             |
             @Html.ActionLink("Back to List", "Index")
         </div>
     }
